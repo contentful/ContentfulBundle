@@ -1,5 +1,5 @@
 {
-  "name": "ContentfulBundle",
+  "name": "contentful/ContentfulBundle",
   "description": "A Symfony2 Bundle to integrate the Contentful CDA SDK",
   "keywords": ["contentful", "cms", "sdk", "symfony2"],
   "type": "symfony-bundle",
