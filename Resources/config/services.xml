@@ -5,4 +5,19 @@
     <parameters>
         <parameter key="contentful.clients" type="collection" />
     </parameters>
+
+    <services>
+        <service id="contentful.data_collector"
+                 class="Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector"
+                 public="false"
+        >
+            <argument>%contentful.clients%</argument>
+
+            <tag name="data_collector"
+                 id="contentful"
+                 template="ContentfulBundle:Collector:contentful"
+                 priority="250"
+            />
+        </service>
+    </services>
 </container>
