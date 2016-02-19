@@ -19,6 +19,9 @@ class ContentfulExtension extends Extension
         $configuration = new Configuration;
         $config = $this->processConfiguration($configuration, $configs);
 
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.xml');
+
         if (!empty($config['delivery'])) {
             $this->loadDelivery($config['delivery'], $container);
         }
@@ -37,9 +40,17 @@ class ContentfulExtension extends Extension
         $container->setParameter('contentful.delivery.default_client', $config['default_client']);
         $container->setAlias('contentful.delivery', sprintf('contentful.delivery.%s_client', $config['default_client']));
 
-        foreach ($config['clients'] as $name => $connection) {
-            $this->loadDeliveryClient($name, $connection, $container);
+        $clients = [];
+        foreach ($config['clients'] as $name => $client) {
+            $clients[$name] = [
+                'service' => sprintf('contentful.delivery.%s_client', $name),
+                'api' => $client['preview'] ? 'PREVIEW' : 'DELIVERY',
+                'space' => $client['space']
+            ];
+            $this->loadDeliveryClient($name, $client, $container);
         }
+
+        $container->setParameter('contentful.clients', $clients);
     }
 
     protected function loadDeliveryClient($name, array $client, ContainerBuilder $container)

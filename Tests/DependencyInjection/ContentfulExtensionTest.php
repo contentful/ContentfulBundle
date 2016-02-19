@@ -12,6 +12,19 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
 {
+    public function loadEmpty()
+    {
+        $container = $this->getContainer();
+        $extension = new ContentfulExtension;
+
+        $container->registerExtension($extension);
+
+        $extension->load([[], [], []], $container);
+
+        // The parameter 'contentful.clients' has to be defined for the InfoCommand to work.
+        $this->assertEquals([], $container->getParameter('contentful.clients'));
+    }
+
     public function testLoadDeliveryDefault()
     {
         $container = $this->getContainer();
@@ -57,6 +70,14 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('123', $definition->getArgument(0));
         $this->assertEquals('abc', $definition->getArgument(1));
+
+        $this->assertEquals([
+            'default' => [
+                'service' => 'contentful.delivery.default_client',
+                'api' => 'DELIVERY',
+                'space' => 'abc'
+            ]
+        ], $container->getParameter('contentful.clients'));
     }
 
     public function testLoadDeliveryImplicitDefault()
@@ -137,6 +158,19 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('456', $definition->getArgument(0));
         $this->assertEquals('def', $definition->getArgument(1));
+
+        $this->assertEquals([
+            'foo' => [
+                'service' => 'contentful.delivery.foo_client',
+                'api' => 'DELIVERY',
+                'space' => 'abc'
+            ],
+            'bar' => [
+                'service' => 'contentful.delivery.bar_client',
+                'api' => 'PREVIEW',
+                'space' => 'def'
+            ]
+        ], $container->getParameter('contentful.clients'));
     }
 
     public function getContainer()
