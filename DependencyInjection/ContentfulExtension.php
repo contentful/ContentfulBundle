@@ -6,6 +6,7 @@
 
 namespace Contentful\ContentfulBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
@@ -61,6 +62,7 @@ class ContentfulExtension extends Extension
                 $client['token'],
                 $client['space'],
                 $client['preview'],
+                new Reference('contentful.logger.array')
             ])
         ;
     }

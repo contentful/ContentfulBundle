@@ -7,10 +7,15 @@
     </parameters>
 
     <services>
+        <service id="contentful.logger.null" class="Contentful\Log\NullLogger" public="false" />
+
+        <service id="contentful.logger.array" class="Contentful\Log\ArrayLogger" public="false" />
+
         <service id="contentful.data_collector"
                  class="Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector"
                  public="false"
         >
+            <argument type="service" id="contentful.logger.array" />
             <argument>%contentful.clients%</argument>
 
             <tag name="data_collector"
