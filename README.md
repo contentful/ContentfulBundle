@@ -25,7 +25,7 @@ public function registerBundles()
 {
     return array(
         // ...
-        new Contenful\ContentfulBundle\KnpPaginatorBundle(),
+        new Contenful\ContentfulBundle\ContentfulBundle(),
         // ...
     );
 }
