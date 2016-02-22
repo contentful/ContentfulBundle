@@ -14,7 +14,7 @@ The SDK is currently in beta. The API might change at any time.
 To add this package to your `composer.json` and install it execute the following command:
 
 ```bash
-php composer.phar require contentful/ContentfulBundle:@beta
+php composer.phar require contentful/contentful-bundle:@beta
 ````
 
 ## Add ContentfulBundle to your application kernel
