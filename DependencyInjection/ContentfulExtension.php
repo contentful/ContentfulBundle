@@ -56,7 +56,7 @@ class ContentfulExtension extends Extension
 
     protected function loadDeliveryClient($name, array $client, ContainerBuilder $container)
     {
-        $def = $container
+        $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
             ->setArguments([
                 $client['token'],
