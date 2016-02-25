@@ -3,11 +3,11 @@ ContentfulBundle
 
 [![Build Status](https://travis-ci.org/contentful/ContentfulBundle.svg?branch=master)](https://travis-ci.org/contentful/ContentfulBundle)
 
-Symfony2 Bundle for the Contentful SDK.
+Symfony Bundle for the Contentful SDK.
 
 [Contentful][1] is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
 
-This Bundle requires at least PHP 5.5.9 and Symfony 2.7. PHP 7 is supported.
+This Bundle requires at least PHP 5.5.9 and Symfony 2.7. PHP 7 and Symfony 3 are supported.
 
 The SDK is currently in beta. The API might change at any time. 
 
