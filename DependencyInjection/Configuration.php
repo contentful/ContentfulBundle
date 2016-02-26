@@ -12,6 +12,16 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * @var bool
+     */
+    private $debug = false;
+
+    public function __construct($debug)
+    {
+        $this->debug = (bool) $debug;
+    }
+
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
@@ -78,6 +88,9 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->booleanNode('preview')
                     ->defaultFalse()
+                ->end()
+                ->booleanNode('request_logging')
+                    ->defaultValue($this->debug)
                 ->end()
             ->end()
         ;
