@@ -46,13 +46,29 @@
 {% endblock %}
 
 {% block panel %}
-    <h2>Requests</h2>
-
     {% if collector.logs is empty %}
+        <h2>Requests</h2>
+
         <div class="empty">
             <p>No Contentful requests were performed.</p>
         </div>
     {% else %}
+        <h2>Contentful Metrics</h2>
+
+        <div class="metrics">
+            <div class="metric">
+                <span class="value">{{ collector.requestCount }}</span>
+                <span class="label">Requests</span>
+            </div>
+
+            <div class="metric">
+                <span class="value">{{ '%0.0f'|format(collector.totalDuration * 1000) }} <span class="unit">ms</span></span>
+                <span class="label">Request time</span>
+            </div>
+        </div>
+
+        <h2>Requests</h2>
+
         <table class="alt">
             <thead>
             <tr>

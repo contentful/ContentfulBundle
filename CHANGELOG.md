@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/0.5.0-beta...HEAD)
 
+### Added
+* Show metrics about requests in the Web Profiler
+
 ### Changed
 * Request logging is only enabled by default if `kernel.debug` is enabled. It can be configured for individual clients
 by setting `request_logging`.
