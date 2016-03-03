@@ -46,6 +46,18 @@
 {% endblock %}
 
 {% block panel %}
+    {% if 'details' == page %}
+        {{ render(controller('ContentfulBundle:Profiler:details', {
+            token: token,
+            requestIndex: app.request.query.get('requestIndex'),
+            panel: 'contentful'
+        })) }}
+    {% else %}
+        {{ block('requests') }}
+    {% endif %}
+{% endblock %}
+
+{% block requests %}
     {% if collector.logs is empty %}
         <h2>Requests</h2>
 
@@ -76,6 +88,7 @@
                 <td>API</td>
                 <td>URL</td>
                 <td>Time</td>
+                <td></td>
             </tr>
             </thead>
             <tbody>
@@ -85,6 +98,7 @@
                     <td>{{ log.api }}</td>
                     <td>{{ log.request.uri }}</td>
                     <td>{{ '%0.0f'|format(log.duration * 1000) }} ms</td>
+                    <td><a class="link-inverse" href="{{ path('_profiler', { panel: 'contentful', token: token, page: 'details', requestIndex: loop.index }) }}">Details</a></td>
                 </tr>
             {% endfor %}
             </tbody>
