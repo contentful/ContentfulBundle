@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Show metrics about requests in the Web Profiler
 * Show headers and response bodies for API calls
+* Added ContentfulDataCollector::getErrorCount
 
 ### Changed
 * Request logging is only enabled by default if `kernel.debug` is enabled. It can be configured for individual clients

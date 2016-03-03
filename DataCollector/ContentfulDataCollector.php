@@ -79,6 +79,13 @@ class ContentfulDataCollector extends DataCollector
         }, 0.0);
     }
 
+    public function getErrorCount()
+    {
+        return array_reduce($this->data['logs'], function($carry, LogEntry $item) {
+            return $carry + ($item->isError() ? 1 : 0);
+        }, 0);
+    }
+
     /**
      * @return array
      */
