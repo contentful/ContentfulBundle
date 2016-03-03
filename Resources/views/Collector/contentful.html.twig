@@ -1,29 +1,31 @@
 {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
 {% block toolbar %}
-    {% set icon %}
-        <span class="icon">
-            <svg viewBox="100 100 200 200" height="24">
-                <path fill="#666766" d="M178.9 227.7c-7.2-7.2-11.6-17.1-11.6-28.1s4.4-20.9 11.6-28.1c6.1-6.1 6.1-16 0-22-6.1-6.1-16-6.1-22 0-12.8 12.8-20.8 30.5-20.8 50.1s7.9 37.3 20.8 50.1c6.1 6.1 16 6.1 22 0 6.1-6 6.1-15.9 0-22z"></path>
-                <path fill="#666766" d="M178.9 171.6c7.2-7.2 17.1-11.6 28.1-11.6s20.9 4.4 28.1 11.6c6.1 6.1 16 6.1 22 0 6.1-6.1 6.1-16 0-22-12.8-12.8-30.5-20.8-50.1-20.8s-37.3 7.9-50.1 20.8c-6.1 6.1-6.1 16 0 22 6.1 6.1 15.9 6.1 22 0zM235 227.7c-7.2 7.2-17.1 11.6-28.1 11.6s-20.9-4.4-28.1-11.6c-6.1-6.1-16-6.1-22 0-6.1 6.1-6.1 16 0 22 12.8 12.8 30.5 20.8 50.1 20.8s37.3-7.9 50.1-20.8c6.1-6.1 6.1-16 0-22-6-6.1-15.9-6.1-22 0z"></path>
-                <path fill="#3A3A3A" d="M178.9 171.6c-6.1 6.1-16 6.1-22 0-6.1-6.1-6.1-16 0-22 6.1-6.1 16-6.1 22 0 6.1 6 6.1 15.9 0 22zM178.9 249.7c-6.1 6.1-16 6.1-22 0-6.1-6.1-6.1-16 0-22 6.1-6.1 16-6.1 22 0 6.1 6.1 6.1 16 0 22z"></path>
-            </svg>
-        </span>
-        <span class="sf-toolbar-status">{{ collector.requestCount }}</span>
-    {% endset %}
+    {% if collector.requestCount > 0 %}
+        {% set icon %}
+            <span class="icon">
+                <svg viewBox="100 100 200 200" height="24">
+                    <path fill="#666766" d="M178.9 227.7c-7.2-7.2-11.6-17.1-11.6-28.1s4.4-20.9 11.6-28.1c6.1-6.1 6.1-16 0-22-6.1-6.1-16-6.1-22 0-12.8 12.8-20.8 30.5-20.8 50.1s7.9 37.3 20.8 50.1c6.1 6.1 16 6.1 22 0 6.1-6 6.1-15.9 0-22z"></path>
+                    <path fill="#666766" d="M178.9 171.6c7.2-7.2 17.1-11.6 28.1-11.6s20.9 4.4 28.1 11.6c6.1 6.1 16 6.1 22 0 6.1-6.1 6.1-16 0-22-12.8-12.8-30.5-20.8-50.1-20.8s-37.3 7.9-50.1 20.8c-6.1 6.1-6.1 16 0 22 6.1 6.1 15.9 6.1 22 0zM235 227.7c-7.2 7.2-17.1 11.6-28.1 11.6s-20.9-4.4-28.1-11.6c-6.1-6.1-16-6.1-22 0-6.1 6.1-6.1 16 0 22 12.8 12.8 30.5 20.8 50.1 20.8s37.3-7.9 50.1-20.8c6.1-6.1 6.1-16 0-22-6-6.1-15.9-6.1-22 0z"></path>
+                    <path fill="#3A3A3A" d="M178.9 171.6c-6.1 6.1-16 6.1-22 0-6.1-6.1-6.1-16 0-22 6.1-6.1 16-6.1 22 0 6.1 6 6.1 15.9 0 22zM178.9 249.7c-6.1 6.1-16 6.1-22 0-6.1-6.1-6.1-16 0-22 6.1-6.1 16-6.1 22 0 6.1 6.1 6.1 16 0 22z"></path>
+                </svg>
+            </span>
+            <span class="sf-toolbar-status">{{ collector.requestCount }}</span>
+        {% endset %}
 
-    {% set text %}
-        <div class="sf-toolbar-info-piece">
-            <b>Requests</b>
-            <span>{{ collector.requestCount }}</span>
-        </div>
-        <div class="sf-toolbar-info-piece">
-            <b>Request time</b>
-            <span>{{ '%0.0f'|format(collector.totalDuration * 1000) }} ms</span>
-        </div>
-    {% endset %}
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <b>Requests</b>
+                <span>{{ collector.requestCount }}</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Request time</b>
+                <span>{{ '%0.0f'|format(collector.totalDuration * 1000) }} ms</span>
+            </div>
+        {% endset %}
 
-    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+    {% endif %}
 {% endblock %}
 
 {% block menu %}
