@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fixed an off-by-one error in the Web Profiler
 
-## [0.5.0-beta](https://github.com/contentful/ContentfulBundle/tree/0.6.0-beta) (2016-03-03)
+## [0.6.0-beta](https://github.com/contentful/ContentfulBundle/tree/0.6.0-beta) (2016-03-03)
 
 ### Added
 * Show metrics about requests in the Web Profiler
