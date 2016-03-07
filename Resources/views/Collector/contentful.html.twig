@@ -98,7 +98,7 @@
                     <td>{{ log.api }}</td>
                     <td>{{ log.request.uri }}</td>
                     <td>{{ '%0.0f'|format(log.duration * 1000) }} ms</td>
-                    <td><a class="link-inverse" href="{{ path('_profiler', { panel: 'contentful', token: token, page: 'details', requestIndex: loop.index }) }}">Details</a></td>
+                    <td><a class="link-inverse" href="{{ path('_profiler', { panel: 'contentful', token: token, page: 'details', requestIndex: loop.index0 }) }}">Details</a></td>
                 </tr>
             {% endfor %}
             </tbody>
