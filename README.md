@@ -60,6 +60,11 @@ contentful:
         preview: true
 ```
 
+Documentation
+=============
+
+[Getting Started Tutorial](https://www.contentful.com/developers/docs/php/tutorials/getting-started-with-contentful-and-symfony/)
+
 License
 =======
 
