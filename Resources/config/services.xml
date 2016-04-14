@@ -11,6 +11,11 @@
 
         <service id="contentful.logger.array" class="Contentful\Log\ArrayLogger" public="false" />
 
+        <service id="contentful.profiler_controller" class="Contentful\ContentfulBundle\Controller\ProfilerController">
+            <argument type="service" id="profiler" />
+            <argument type="service" id="templating" />
+        </service>
+
         <service id="contentful.data_collector"
                  class="Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector"
                  public="false"

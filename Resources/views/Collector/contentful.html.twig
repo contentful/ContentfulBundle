@@ -47,7 +47,7 @@
 
 {% block panel %}
     {% if 'details' == page %}
-        {{ render(controller('ContentfulBundle:Profiler:details', {
+        {{ render(controller('contentful.profiler_controller:details', {
             token: token,
             requestIndex: app.request.query.get('requestIndex'),
             panel: 'contentful'

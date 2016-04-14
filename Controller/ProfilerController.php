@@ -6,33 +6,37 @@
 
 namespace Contentful\ContentfulBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
-class ProfilerController implements ContainerAwareInterface
+class ProfilerController
 {
     /**
-     * @var ContainerInterface
+     * @var Profiler
      */
-    private $container;
+    private $profiler;
 
-    public function setContainer(ContainerInterface $container = null)
+    /**
+     * @var EngineInterface
+     */
+    private $templating;
+
+    public function __construct(Profiler $profiler, EngineInterface $templating)
     {
-        $this->container = $container;
+        $this->profiler = $profiler;
+        $this->templating = $templating;
     }
 
-    public function detailsAction($token, $requestIndex)
+    public function details($token, $requestIndex)
     {
-        /** @var $profiler \Symfony\Component\HttpKernel\Profiler\Profiler */
-        $profiler = $this->container->get('profiler');
-        $profiler->disable();
+        $this->profiler->disable();
 
-        $profile = $profiler->loadProfile($token);
+        $profile = $this->profiler->loadProfile($token);
         $logs = $profile->getCollector('contentful')->getLogs();
 
         $logEntry = $logs[$requestIndex];
 
-        return $this->container->get('templating')->renderResponse('@Contentful/Collector/details.html.twig', [
+        return $this->templating->renderResponse('@Contentful/Collector/details.html.twig', [
             'requestIndex' => $requestIndex,
             'entry' => $logEntry
         ]);

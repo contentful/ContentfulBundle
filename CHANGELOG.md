@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/0.6.0-beta...HEAD)
 
+### Changed
+* `ProfilerController` is now a service
+
 ### Fixed
 * Fixed an off-by-one error in the Web Profiler
 
