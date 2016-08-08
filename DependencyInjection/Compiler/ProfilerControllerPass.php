@@ -24,7 +24,7 @@ class ProfilerControllerPass implements CompilerPassInterface
             return;
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('delivery.xml');
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
+        $loader->load('profiler-controller.xml');
     }
 }
