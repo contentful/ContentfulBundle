@@ -14,13 +14,13 @@ use Symfony\Component\Config\FileLocator;
 class ProfilerControllerPass implements CompilerPassInterface
 {
     /**
-     * You can modify the container here before it is dumped to PHP code.
+     * Loads the definition for the ProfilerController when the profiler is present.
      *
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        if (! $container->hasDefinition('profiler')) {
+        if (!$container->hasDefinition('profiler')) {
             return;
         }
 
