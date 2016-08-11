@@ -13,7 +13,7 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
 {
     use ContainerTrait;
 
-    public function loadEmpty()
+    public function testLoadEmpty()
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension;
