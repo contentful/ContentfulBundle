@@ -7,12 +7,13 @@
 namespace Contentful\ContentfulBundle\Tests\DependencyInjection;
 
 use Contentful\ContentfulBundle\DependencyInjection\ContentfulExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Contentful\ContentfulBundle\Tests\ContainerTrait;
 
 class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
 {
-    public function loadEmpty()
+    use ContainerTrait;
+
+    public function testLoadEmpty()
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension;
@@ -171,16 +172,5 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
                 'space' => 'def'
             ]
         ], $container->getParameter('contentful.clients'));
-    }
-
-    public function getContainer()
-    {
-        return new ContainerBuilder(new ParameterBag([
-            'kernel.debug' => false,
-            'kernel.bundles' => [],
-            'kernel.cache_dir' => sys_get_temp_dir(),
-            'kernel.environment' => 'test',
-            'kernel.root_dir' => __DIR__.'/../../', // src dir
-        ]));
     }
 }
