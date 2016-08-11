@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/0.6.1-beta...HEAD)
 
+### Fixed
+* `cache:clear` throws an exception in production environments (#2)
+
 ## [0.6.1-beta](https://github.com/contentful/ContentfulBundle/tree/0.6.1-beta) (2016-04-14)
 
 ### Changed
