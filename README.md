@@ -27,7 +27,7 @@ public function registerBundles()
 {
     return array(
         // ...
-        new Contenful\ContentfulBundle\ContentfulBundle(),
+        new Contentful\ContentfulBundle\ContentfulBundle(),
         // ...
     );
 }
