@@ -58,7 +58,7 @@ class ContentfulExtension extends Extension
     {
         $logger = $client['request_logging'] ? 'contentful.logger.array' : 'contentful.logger.null';
 
-        $container
+        $definition = $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
             ->setArguments([
                 $client['token'],
@@ -67,5 +67,9 @@ class ContentfulExtension extends Extension
                 new Reference($logger)
             ])
         ;
+
+        if ($client['http_client'] !== false) {
+            $definition->addMethodCall('setHttpClient', [new Reference($client['http_client'])]);
+        }
     }
 }
