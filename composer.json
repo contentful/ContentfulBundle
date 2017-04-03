@@ -9,9 +9,6 @@
     "contentful/contentful": "~0.6.4@beta",
     "symfony/framework-bundle": "~2.7|~3.0"
   },
-  "require-dev": {
-    "phpunit/phpunit": "~4.8"
-  },
   "autoload": {
     "psr-4": {
       "Contentful\\ContentfulBundle\\": ""
