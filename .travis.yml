@@ -20,4 +20,5 @@ install:
   - composer install
 
 script:
+ - vendor/bin/parallel-lint --exclude vendor .
  - php phpunit.phar -v
