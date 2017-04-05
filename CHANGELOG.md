@@ -3,7 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/0.6.1-beta...HEAD)
+## [0.6.2-beta](https://github.com/contentful/ContentfulBundle/tree/0.6.2-beta) (2016-04-14)
+
+### Changed
+* `ProfilerController::details` has been renamed to `ProfilerController::detailsAction`
 
 ### Fixed
 * `cache:clear` throws an exception in production environments ([#2](https://github.com/contentful/ContentfulBundle/pull/2))
@@ -12,7 +15,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * `ProfilerController` is now a service
-* `ProfilerController::details` has been renamed to `ProfilerController::detailsAction`
 
 ### Fixed
 * Fixed an off-by-one error in the Web Profiler
