@@ -27,7 +27,7 @@ class ProfilerController
         $this->templating = $templating;
     }
 
-    public function details($token, $requestIndex)
+    public function detailsAction($token, $requestIndex)
     {
         $this->profiler->disable();
 
