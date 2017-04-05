@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * `ProfilerController` is now a service
+* `ProfilerController::details` has been renamed to `ProfilerController::detailsAction`
 
 ### Fixed
 * Fixed an off-by-one error in the Web Profiler
