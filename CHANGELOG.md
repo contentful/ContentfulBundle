@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * Overriding URI used to communicate with the Contentful API (`uri_override`)
   * Setting the default locale for the client (`default_locale`)
   * Setting a custom Guzzle instance (`http_client`)
+  * Caching the space and content types (`cache`)
 
 ### Changed
 * Use version 0.8 of the Contentful SDK. **Note:** This release contains breaking changes, you can read more about them

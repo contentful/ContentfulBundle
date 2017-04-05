@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2016 Contentful GmbH
+ * @copyright 2015-2017 Contentful GmbH
  * @license   MIT
  */
 
@@ -49,6 +49,7 @@ class ContentfulExtension extends Extension
                 'space' => $client['space']
             ];
             $this->loadDeliveryClient($name, $client, $container);
+            $this->loadDeliveryCacheWarmer($name, $client, $container);
         }
 
         $container->setParameter('contentful.clients', $clients);
@@ -67,6 +68,10 @@ class ContentfulExtension extends Extension
             $options['guzzle'] = new Reference($client['http_client']);
         }
 
+        if ($client['cache']) {
+            $options['cacheDir'] = '%kernel.cache_dir%' . '/contentful';
+        }
+
         $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
             ->setArguments([
@@ -76,6 +81,31 @@ class ContentfulExtension extends Extension
                 $client['default_locale'],
                 $options
             ])
+        ;
+    }
+
+    public function loadDeliveryCacheWarmer($name, array $client, ContainerBuilder $container)
+    {
+        if (!$client['cache']) {
+            return;
+        }
+
+        $container
+            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_warmer', $name), new DefinitionDecorator('contentful.delivery.cache_warmer'))
+            ->setArguments([
+                new Reference(sprintf('contentful.delivery.%s_client', $name)),
+                'contentful'
+            ])
+            ->addTag('kernel.cache_warmer')
+        ;
+
+        $container
+            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), new DefinitionDecorator('contentful.delivery.cache_clearer'))
+            ->setArguments([
+                $client['space'],
+                'contentful'
+            ])
+            ->addTag('kernel.cache_clearer')
         ;
     }
 }
