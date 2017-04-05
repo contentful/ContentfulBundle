@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/0.6.2-beta...HEAD)
 
+### Changed
+* Use version 0.7 of the Contentful SDK. **Note:** This release contains breaking changes, you can read more about them
+in the [Changelog](https://github.com/contentful/contentful.php/releases/tag/0.7.0-beta).
+
 ## [0.6.2-beta](https://github.com/contentful/ContentfulBundle/tree/0.6.2-beta) (2016-04-14)
 
 ### Changed

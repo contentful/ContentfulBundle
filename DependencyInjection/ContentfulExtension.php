@@ -57,6 +57,7 @@ class ContentfulExtension extends Extension
     protected function loadDeliveryClient($name, array $client, ContainerBuilder $container)
     {
         $logger = $client['request_logging'] ? 'contentful.logger.array' : 'contentful.logger.null';
+        $options = ['logger' => new Reference($logger)];
 
         $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
@@ -64,7 +65,8 @@ class ContentfulExtension extends Extension
                 $client['token'],
                 $client['space'],
                 $client['preview'],
-                new Reference($logger)
+                null,
+                $options
             ])
         ;
     }
