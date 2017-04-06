@@ -57,6 +57,15 @@ class ContentfulExtension extends Extension
     protected function loadDeliveryClient($name, array $client, ContainerBuilder $container)
     {
         $logger = $client['request_logging'] ? 'contentful.logger.array' : 'contentful.logger.null';
+        $options = ['logger' => new Reference($logger)];
+
+        if (!empty($client['uri_override'])) {
+            $options['uriOverride'] = $client['uri_override'];
+        }
+
+        if (!empty($client['http_client'])) {
+            $options['guzzle'] = new Reference($client['http_client']);
+        }
 
         $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
@@ -64,7 +73,8 @@ class ContentfulExtension extends Extension
                 $client['token'],
                 $client['space'],
                 $client['preview'],
-                new Reference($logger)
+                $client['default_locale'],
+                $options
             ])
         ;
     }

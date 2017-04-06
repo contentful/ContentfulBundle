@@ -92,6 +92,16 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('request_logging')
                     ->defaultValue($this->debug)
                 ->end()
+                ->scalarNode('default_locale')
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('uri_override')
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('http_client')
+                  ->info('Override the default HTTP client with a custom Guzzle instance. Service ID as string.')
+                  ->cannotBeEmpty()
+                ->end()
             ->end()
         ;
 
