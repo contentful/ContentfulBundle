@@ -69,7 +69,7 @@ class ContentfulExtension extends Extension
                 $client['token'],
                 $client['space'],
                 $client['preview'],
-                null,
+                $client['default_locale'],
                 $options
             ])
         ;
