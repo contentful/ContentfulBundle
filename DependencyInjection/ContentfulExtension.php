@@ -59,6 +59,10 @@ class ContentfulExtension extends Extension
         $logger = $client['request_logging'] ? 'contentful.logger.array' : 'contentful.logger.null';
         $options = ['logger' => new Reference($logger)];
 
+        if (!empty($client['uri_override'])) {
+            $options['uriOverride'] = $client['uri_override'];
+        }
+
         $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
             ->setArguments([

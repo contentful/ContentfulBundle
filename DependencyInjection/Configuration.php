@@ -92,6 +92,9 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('request_logging')
                     ->defaultValue($this->debug)
                 ->end()
+                ->scalarNode('uri_override')
+                    ->cannotBeEmpty()
+                ->end()
             ->end()
         ;
 
