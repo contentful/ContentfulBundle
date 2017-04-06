@@ -63,6 +63,10 @@ class ContentfulExtension extends Extension
             $options['uriOverride'] = $client['uri_override'];
         }
 
+        if (!empty($client['http_client'])) {
+            $options['guzzle'] = new Reference($client['http_client']);
+        }
+
         $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
             ->setArguments([
