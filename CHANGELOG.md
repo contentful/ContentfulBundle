@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Use version 0.7 of the Contentful SDK. **Note:** This release contains breaking changes, you can read more about them
 in the [Changelog](https://github.com/contentful/contentful.php/releases/tag/0.7.0-beta).
 
-## [0.6.2-beta](https://github.com/contentful/ContentfulBundle/tree/0.6.2-beta) (2016-04-14)
+## [0.6.2-beta](https://github.com/contentful/ContentfulBundle/tree/0.6.2-beta) (2017-04-05)
 
 ### Changed
 * `ProfilerController::details` has been renamed to `ProfilerController::detailsAction`
