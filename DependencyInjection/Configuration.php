@@ -102,6 +102,9 @@ class Configuration implements ConfigurationInterface
                   ->info('Override the default HTTP client with a custom Guzzle instance. Service ID as string.')
                   ->cannotBeEmpty()
                 ->end()
+                ->booleanNode('cache')
+                  ->defaultValue(!$this->debug)
+                ->end()
             ->end()
         ;
 

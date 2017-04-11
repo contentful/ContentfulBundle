@@ -4,5 +4,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="contentful.delivery.client" class="Contentful\Delivery\Client" abstract="true" />
+
+        <service id="contentful.delivery.cache_warmer" class="Contentful\ContentfulBundle\CacheWarmer\DeliveryCacheWarmer" abstract="true" />
+
+        <service id="contentful.delivery.cache_clearer" class="Contentful\ContentfulBundle\CacheClearer\DeliveryCacheClearer" abstract="true" />
     </services>
 </container>
