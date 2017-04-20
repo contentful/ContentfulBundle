@@ -72,7 +72,7 @@ class ContentfulExtension extends Extension
             $options['cacheDir'] = '%kernel.cache_dir%' . '/contentful';
         }
 
-        $container
+        $definition = $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
             ->setArguments([
                 $client['token'],
@@ -107,5 +107,9 @@ class ContentfulExtension extends Extension
             ])
             ->addTag('kernel.cache_clearer')
         ;
+
+        if ($client['http_client'] !== false) {
+            $definition->addMethodCall('setHttpClient', [new Reference($client['http_client'])]);
+        }
     }
 }
