@@ -9,14 +9,12 @@ Symfony Bundle for the Contentful SDK.
 
 This Bundle requires at least PHP 5.5.9 and Symfony 2.7. PHP 7 and Symfony 3 are supported.
 
-The SDK is currently in beta. The API might change at any time. 
-
 # Setup
 
 To add this package to your `composer.json` and install it execute the following command:
 
 ```bash
-php composer.phar require contentful/contentful-bundle:@beta
+php composer.phar require contentful/contentful-bundle
 ````
 
 ## Add ContentfulBundle to your application kernel
