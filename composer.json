@@ -6,7 +6,7 @@
   "license": "MIT",
   "require": {
     "php": ">=5.5.9",
-    "contentful/contentful": "~0.8@beta",
+    "contentful/contentful": "~1.0",
     "symfony/framework-bundle": "~2.7|~3.0"
   },
   "require-dev": {
