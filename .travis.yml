@@ -22,3 +22,6 @@ install:
 script:
  - vendor/bin/parallel-lint --exclude vendor .
  - php phpunit.phar -v
+
+after_success:
+ - travis_retry bash <(curl -s https://codecov.io/bash) -f build/clover/tests.xml
