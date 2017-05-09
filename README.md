@@ -2,6 +2,7 @@ ContentfulBundle
 ================
 
 [![Build Status](https://travis-ci.org/contentful/ContentfulBundle.svg?branch=master)](https://travis-ci.org/contentful/ContentfulBundle)
+[![codecov](https://codecov.io/gh/contentful/ContentfulBundle/branch/master/graph/badge.svg)](https://codecov.io/gh/contentful/ContentfulBundle)
 
 Symfony Bundle for the Contentful SDK.
 
