@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ContentfulBundle extends Bundle
 {
+    const VERSION = '2.0.0-dev';
+
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new ProfilerControllerPass());
