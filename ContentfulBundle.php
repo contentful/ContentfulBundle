@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ContentfulBundle extends Bundle
 {
-    const VERSION = '2.0.0';
+    const VERSION = '2.1.0-dev';
 
     public function build(ContainerBuilder $container)
     {
