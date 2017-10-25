@@ -101,4 +101,9 @@ class ContentfulDataCollector extends DataCollector
     {
         return 'contentful';
     }
+
+    public function reset()
+    {
+        $this->data['logs'] = array();
+    }
 }
