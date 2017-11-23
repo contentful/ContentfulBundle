@@ -12,6 +12,15 @@ This Bundle requires at least PHP 5.5.9 and Symfony 2.7. PHP 7 and Symfony 3 are
 
 # Setup
 
+## Prerequisites
+
+To make this bundle works, make sure the `@templating` service [is correctly declared](https://symfony.com/doc/3.2/templating/templating_service.html) by setting the following to the `framework` config:
+
+```yml
+framework:
+    templating: { engines: ['twig'] }
+```
+
 To add this package to your `composer.json` and install it execute the following command:
 
 ```bash
