@@ -1,7 +1,7 @@
 {
   "name": "contentful/contentful-bundle",
   "description": "A Symfony2 Bundle to integrate the Contentful CDA SDK",
-  "keywords": ["contentful", "cms", "sdk", "symfony2"],
+  "keywords": ["contentful", "content infrastructure", "sdk", "symfony2"],
   "type": "symfony-bundle",
   "license": "MIT",
   "require": {
