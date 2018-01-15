@@ -6,10 +6,10 @@
 
 namespace Contentful\ContentfulBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
@@ -73,7 +73,7 @@ class ContentfulExtension extends Extension
         }
 
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
+            ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new ChildDefinition('contentful.delivery.client'))
             ->setArguments([
                 $client['token'],
                 $client['space'],
@@ -91,7 +91,7 @@ class ContentfulExtension extends Extension
         }
 
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_warmer', $name), new DefinitionDecorator('contentful.delivery.cache_warmer'))
+            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_warmer', $name), new ChildDefinition('contentful.delivery.cache_warmer'))
             ->setArguments([
                 new Reference(sprintf('contentful.delivery.%s_client', $name)),
                 'contentful'
@@ -100,7 +100,7 @@ class ContentfulExtension extends Extension
         ;
 
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), new DefinitionDecorator('contentful.delivery.cache_clearer'))
+            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), new ChildDefinition('contentful.delivery.cache_clearer'))
             ->setArguments([
                 $client['space'],
                 'contentful'

@@ -101,4 +101,12 @@ class ContentfulDataCollector extends DataCollector
     {
         return 'contentful';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function reset()
+    {
+        $this->data['logs'] = [];
+    }
 }
