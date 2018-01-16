@@ -6,8 +6,13 @@
   "license": "MIT",
   "require": {
     "php": ">=5.5.9",
-    "contentful/contentful": "^2.0",
-    "symfony/framework-bundle": "~2.7|~3.0"
+    "contentful/contentful": "dev-psr-6",
+    "symfony/framework-bundle": "~2.7|~3.0",
+    "symfony/http-kernel": "~2.7|~3.0",
+    "symfony/console": "~2.7|~3.0",
+    "symfony/http-foundation": "~2.7|~3.0",
+    "symfony/dependency-injection": "~2.7|~3.0",
+    "symfony/config": "~2.7|~3.0"
   },
   "require-dev": {
     "jakub-onderka/php-console-highlighter": "^0.3.2",
@@ -25,5 +30,8 @@
     "branch-alias": {
       "dev-master": "2.1.0-dev"
     }
-  }
+  },
+  "repositories": [
+    { "type": "vcs", "url": "https://github.com/rdey/contentful.php" }
+  ]
 }
