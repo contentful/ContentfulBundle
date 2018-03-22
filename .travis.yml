@@ -8,16 +8,30 @@ php:
   - 7.1
 
 matrix:
+  include:
+    - php: 5.5.9
+      env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
+    - php: 5.5
+      env: SYMFONY_VERSION='2.7.*'
+    - php: 5.6
+      env: SYMFONY_VERSION='2.8.*'
+    - php: 5.6
+      env: SYMFONY_VERSION='3.0.*'
+    - php: 7.0
+      env: SYMFONY_VERSION='3.3.*'
+    - php: 7.1
+      env: SYMFONY_VERSION='4.0.*'
   fast_finish: true
 
 before_install:
+ - composer self-update
  - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
  - if [ "${TRAVIS_PHP_VERSION:0:3}" == "5.5" ]; then PHPUNIT_VERSION=4.8; else PHPUNIT_VERSION=5.7; fi
  - wget -O phpunit.phar https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar
+ - if [ "$SYMFONY_VERSION" != "" ]; then composer --no-update require symfony/framework-bundle:${SYMFONY_VERSION}; fi;
 
 install:
-  - composer self-update
-  - composer install
+  - composer update
 
 script:
  - vendor/bin/parallel-lint --exclude vendor .
