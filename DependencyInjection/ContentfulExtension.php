@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
@@ -72,8 +73,12 @@ class ContentfulExtension extends Extension
             $options['cacheDir'] = '%kernel.cache_dir%' . '/contentful';
         }
 
+        $deliverClientDefinition = class_exists(ChildDefinition::class) ?
+            new ChildDefinition('contentful.delivery.client') :
+            new DefinitionDecorator('contentful.delivery.client');
+
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new ChildDefinition('contentful.delivery.client'))
+            ->setDefinition(sprintf('contentful.delivery.%s_client', $name), $deliverClientDefinition)
             ->setArguments([
                 $client['token'],
                 $client['space'],
@@ -90,8 +95,16 @@ class ContentfulExtension extends Extension
             return;
         }
 
+        if (class_exists(ChildDefinition::class)) {
+            $cacheWarmerDefintion = new ChildDefinition('contentful.delivery.cache_warmer');
+            $cacheClearerDefintion = new ChildDefinition('contentful.delivery.cache_clearer');
+        } else {
+            $cacheWarmerDefintion = new DefinitionDecorator('contentful.delivery.cache_warmer');
+            $cacheClearerDefintion = new DefinitionDecorator('contentful.delivery.cache_clearer');
+        }
+
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_warmer', $name), new ChildDefinition('contentful.delivery.cache_warmer'))
+            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_warmer', $name), $cacheWarmerDefintion)
             ->setArguments([
                 new Reference(sprintf('contentful.delivery.%s_client', $name)),
                 'contentful'
@@ -100,7 +113,7 @@ class ContentfulExtension extends Extension
         ;
 
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), new ChildDefinition('contentful.delivery.cache_clearer'))
+            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), $cacheClearerDefintion)
             ->setArguments([
                 $client['space'],
                 'contentful'
