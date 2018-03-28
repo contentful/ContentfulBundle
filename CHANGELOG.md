@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/2.0.0...HEAD)
 
+### Added
+* Compatibility with Symfony 4 (thanks @cjost1988)
+
 ## [2.0.0](https://github.com/contentful/ContentfulBundle/tree/2.0.0) (2017-06-14)
 
 **ATTENTION**: This release contains breaking changes. Please take extra care when updating to this version.
