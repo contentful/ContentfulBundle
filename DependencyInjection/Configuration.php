@@ -9,6 +9,7 @@ namespace Contentful\ContentfulBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class Configuration implements ConfigurationInterface
 {
@@ -102,8 +103,16 @@ class Configuration implements ConfigurationInterface
                   ->info('Override the default HTTP client with a custom Guzzle instance. Service ID as string.')
                   ->cannotBeEmpty()
                 ->end()
-                ->booleanNode('cache')
-                  ->defaultValue(!$this->debug)
+                ->scalarNode('cache')
+                  ->info(Kernel::VERSION_ID >= 31000 ? 'The cache to use. Can either be true, false or the service ID of a PSR-6 compatible cache to use.' : 'The cache to use. Can either be false or the service ID of a PSR-6 compatible cache to use.')
+                  ->defaultValue(Kernel::VERSION_ID >= 31000 ? !$this->debug : false)
+                  ->validate()
+                      ->ifTrue(function ($v) { return true === $v && Kernel::VERSION_ID < 31000; })
+                      ->thenInvalid(sprintf('Cache can only be true on Symfony 3.1 or higher. You are using version %s.', Kernel::VERSION))
+                  ->end()
+                ->end()
+                ->booleanNode('auto_warmup')
+                    ->defaultValue(true)
                 ->end()
             ->end()
         ;

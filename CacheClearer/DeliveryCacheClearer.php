@@ -7,37 +7,26 @@
 namespace Contentful\ContentfulBundle\CacheClearer;
 
 use Contentful\Delivery\Cache\CacheClearer;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
-class DeliveryCacheClearer extends CacheClearer implements CacheClearerInterface
+class DeliveryCacheClearer implements CacheClearerInterface
 {
     /**
-     * @var string
+     * @var CacheClearer
      */
-    private $subDirectory;
+    private $contentfulClearer;
 
     /**
      * DeliveryCacheClearer constructor.
-     *
-     * @param  string $spaceId
-     * @param  string $cacheSubDirectory
      */
-    public function __construct($spaceId, $cacheSubDirectory = '')
+    public function __construct(CacheItemPoolInterface $cacheItemPool)
     {
-        parent::__construct($spaceId);
-
-        $this->subDirectory = $cacheSubDirectory;
+        $this->contentfulClearer = new CacheClearer($cacheItemPool);
     }
 
-    /**
-     * @param string $cacheDir
-     */
     public function clear($cacheDir)
     {
-        if (!empty($this->subDirectory)) {
-            $cacheDir .= '/' . $this->subDirectory;
-        }
-
-        parent::clear($cacheDir);
+        $this->contentfulClearer->clear();
     }
 }

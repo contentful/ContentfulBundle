@@ -8,45 +8,47 @@ namespace Contentful\ContentfulBundle\CacheWarmer;
 
 use Contentful\Delivery\Cache\CacheWarmer;
 use Contentful\Delivery\Client;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
-class DeliveryCacheWarmer extends CacheWarmer implements CacheWarmerInterface
+class DeliveryCacheWarmer implements CacheWarmerInterface
 {
     /**
-     * @var string
+     * @var bool
      */
-    private $subDirectory;
+    private $autoWarmup;
+
+    /**
+     * @var CacheWarmer
+     */
+    private $contentfulWarmer;
 
     /**
      * DeliveryCacheWarmer constructor.
      *
-     * @param  Client $client
-     * @param  string $cacheSubDirectory
+     * @param Client $client
+     * @param CacheItemPoolInterface $cacheItemPool
+     * @param bool $autoWarmup
      */
-    public function __construct(Client $client, $cacheSubDirectory = '')
+    public function __construct(Client $client, CacheItemPoolInterface $cacheItemPool, $autoWarmup)
     {
-        parent::__construct($client);
-
-        $this->subDirectory = $cacheSubDirectory;
+        $this->contentfulWarmer = new CacheWarmer($client, $cacheItemPool);
+        $this->autoWarmup = $autoWarmup;
     }
 
     /**
-     * @param  string $cacheDir
+     * {@inheritdoc}
      */
     public function warmUp($cacheDir)
     {
-        if (!empty($this->subDirectory)) {
-            $cacheDir .= '/' . $this->subDirectory;
-        }
-
-        parent::warmUp($cacheDir);
+        $this->contentfulWarmer->warmUp();
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isOptional()
     {
-        return false;
+        return $this->autoWarmup;
     }
 }

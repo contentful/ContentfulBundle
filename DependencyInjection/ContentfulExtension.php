@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\HttpKernel\Kernel;
 
 class ContentfulExtension extends Extension
 {
@@ -69,8 +70,20 @@ class ContentfulExtension extends Extension
         }
 
         if ($client['cache']) {
-            $options['cacheDir'] = '%kernel.cache_dir%' . '/contentful';
+            if ($client['cache'] === false) {
+                $options['cache'] = null;
+            } elseif ($client['cache'] === true && Kernel::VERSION_ID >= 31000) {
+                $options['cache'] = new Reference('cache.system');
+            } elseif ($client['cache'] === true) {
+                throw new \InvalidArgumentException(sprintf(
+                    "The cache node can only be true on Symfony 3.1 or higher. You are using version %s. Please use false or the service id of a PSR-6 Cache Item Pool."
+                , Kernel::VERSION));
+            } else {
+                $options['cache'] = new Reference($client['cache']);
+            }
         }
+
+        $options['autoWarmup'] = $client['auto_warmup'];
 
         $container
             ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
@@ -94,18 +107,20 @@ class ContentfulExtension extends Extension
             ->setDefinition(sprintf('contentful.delivery.%s_client.cache_warmer', $name), new DefinitionDecorator('contentful.delivery.cache_warmer'))
             ->setArguments([
                 new Reference(sprintf('contentful.delivery.%s_client', $name)),
-                'contentful'
+                $client['cache'] === true ? new Reference('cache.system') : new Reference($client['cache']),
+                $client['auto_warmup'],
             ])
             ->addTag('kernel.cache_warmer')
         ;
 
-        $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), new DefinitionDecorator('contentful.delivery.cache_clearer'))
-            ->setArguments([
-                $client['space'],
-                'contentful'
-            ])
-            ->addTag('kernel.cache_clearer')
-        ;
+        // This is not necessary for the cache.system service, which is automatically cleared on cache clear.
+        if ($client['cache'] !== true) {
+            $container
+                ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), new DefinitionDecorator('contentful.delivery.cache_clearer'))
+                ->setArguments([
+                    new Reference($client['cache'])
+                ])
+                ->addTag('kernel.cache_clearer');
+        }
     }
 }
