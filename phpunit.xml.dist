@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-        bootstrap="vendor/autoload.php">
+<phpunit bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="ContentfulBundle Unit Tests">
-            <directory>Tests</directory>
+        <testsuite name="unit">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
     <logging>
-        <log type="coverage-html" target="build/coverage" title="contentful.php" charset="UTF-8" yui="true" highlight="true"
+        <log type="coverage-html" target="build/coverage" title="contentful/contentful-bundle" charset="UTF-8" yui="true" highlight="true"
              lowUpperBound="35" highLowerBound="70" />
         <log type="coverage-clover" target="build/clover/tests.xml"/>
     </logging>
 
     <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">.</directory>
-            <file>./ContentfulBundle.php</file>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
 </phpunit>
