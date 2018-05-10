@@ -4,7 +4,7 @@
  * @license   MIT
  */
 
-namespace Contentful\ContentfulBundle\Tests\DataCollector;
+namespace Contentful\Tests\ContentfulBundle\DataCollector;
 
 use Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector;
 use Contentful\Log\ArrayLogger;

@@ -4,10 +4,10 @@
  * @license   MIT
  */
 
-namespace Contentful\ContentfulBundle\Tests\DependencyInjection;
+namespace Contentful\Tests\ContentfulBundle\DependencyInjection;
 
 use Contentful\ContentfulBundle\DependencyInjection\ContentfulExtension;
-use Contentful\ContentfulBundle\Tests\ContainerTrait;
+use Contentful\Tests\ContentfulBundle\ContainerTrait;
 
 class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
 {

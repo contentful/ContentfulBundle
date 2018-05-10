@@ -4,10 +4,10 @@
  * @license   MIT
  */
 
-namespace Contentful\ContentfulBundle\Tests\DependencyInjection\Compiler;
+namespace Contentful\Tests\ContentfulBundle\DependencyInjection\Compiler;
 
 use Contentful\ContentfulBundle\DependencyInjection\Compiler\ProfilerControllerPass;
-use Contentful\ContentfulBundle\Tests\ContainerTrait;
+use Contentful\Tests\ContentfulBundle\ContainerTrait;
 use Symfony\Component\DependencyInjection\Definition;
 
 class ProfilerControllerPassTest extends \PHPUnit_Framework_TestCase

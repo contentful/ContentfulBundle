@@ -4,7 +4,7 @@
  * @license   MIT
  */
 
-namespace Contentful\ContentfulBundle\Tests;
+namespace Contentful\Tests\ContentfulBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;

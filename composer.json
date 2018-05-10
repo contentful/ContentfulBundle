@@ -1,7 +1,7 @@
 {
   "name": "contentful/contentful-bundle",
-  "description": "A Symfony2 Bundle to integrate the Contentful CDA SDK",
-  "keywords": ["contentful", "cms", "sdk", "symfony2"],
+  "description": "A Symfony Bundle to integrate the Contentful CDA SDK",
+  "keywords": ["contentful", "cms", "sdk", "symfony"],
   "type": "symfony-bundle",
   "license": "MIT",
   "require": {
@@ -15,11 +15,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Contentful\\ContentfulBundle\\": ""
-    },
-    "exclude-from-classmap": [
-      "/Tests/"
-    ]
+      "Contentful\\ContentfulBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Contentful\\Tests\\ContentfulBundle\\": "tests/"
+    }
   },
   "extra": {
     "branch-alias": {
