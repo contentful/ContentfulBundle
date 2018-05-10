@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 

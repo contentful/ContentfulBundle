@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -37,17 +40,15 @@ class ContentfulDataCollector extends DataCollector
     }
 
     /**
-     * @param  Request         $request
-     * @param  Response        $response
-     * @param  \Exception|null $exception
-     *
-     * @return void
+     * @param Request         $request
+     * @param Response        $response
+     * @param \Exception|null $exception
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = [
             'logs' => $this->logger->getLogs(),
-            'clients' => $this->clients
+            'clients' => $this->clients,
         ];
     }
 
@@ -64,7 +65,7 @@ class ContentfulDataCollector extends DataCollector
      */
     public function getRequestCount()
     {
-        return count($this->data['logs']);
+        return \count($this->data['logs']);
     }
 
     /**
@@ -72,7 +73,7 @@ class ContentfulDataCollector extends DataCollector
      */
     public function getTotalDuration()
     {
-        return array_reduce($this->data['logs'], function($carry, LogEntry $item) {
+        return \array_reduce($this->data['logs'], function ($carry, LogEntry $item) {
             $duration = $item->getDuration();
 
             return $carry + $duration;
@@ -81,7 +82,7 @@ class ContentfulDataCollector extends DataCollector
 
     public function getErrorCount()
     {
-        return array_reduce($this->data['logs'], function($carry, LogEntry $item) {
+        return \array_reduce($this->data['logs'], function ($carry, LogEntry $item) {
             return $carry + ($item->isError() ? 1 : 0);
         }, 0);
     }

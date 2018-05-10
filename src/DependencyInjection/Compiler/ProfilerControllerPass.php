@@ -1,15 +1,18 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
 namespace Contentful\ContentfulBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Config\FileLocator;
 
 class ProfilerControllerPass implements CompilerPassInterface
 {
@@ -24,7 +27,7 @@ class ProfilerControllerPass implements CompilerPassInterface
             return;
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../../Resources/config'));
         $loader->load('profiler-controller.xml');
     }
 }

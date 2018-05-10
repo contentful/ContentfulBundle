@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -38,20 +41,29 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->arrayNode('delivery')
                 ->beforeNormalization()
-                    ->ifTrue(function ($v) { return is_array($v) && !array_key_exists('clients', $v) && !array_key_exists('client', $v); })
+                    ->ifTrue(function ($value) {
+                        return \is_array($value)
+                            && !\array_key_exists('clients', $value)
+                            && !\array_key_exists('client', $value);
+                    })
                     ->then(function ($v) {
                         // Key that should not be rewritten to the client config
-                        $excludedKeys = array('default_client' => true);
-                        $connection = array();
+                        $excludedKeys = ['default_client' => true];
+                        $connection = [];
                         foreach ($v as $key => $value) {
                             if (isset($excludedKeys[$key])) {
                                 continue;
                             }
+
                             $connection[$key] = $v[$key];
                             unset($v[$key]);
                         }
+
                         $v['default_client'] = isset($v['default_client']) ? (string) $v['default_client'] : 'default';
-                        $v['clients'] = array($v['default_client'] => $connection);
+                        $v['clients'] = [
+                            $v['default_client'] => $connection,
+                        ];
+
                         return $v;
                     })
                 ->end()

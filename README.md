@@ -1,35 +1,30 @@
-ContentfulBundle
-================
+# ContentfulBundle
 
-[![Build Status](https://travis-ci.org/contentful/ContentfulBundle.svg?branch=master)](https://travis-ci.org/contentful/ContentfulBundle)
-[![codecov](https://codecov.io/gh/contentful/ContentfulBundle/branch/master/graph/badge.svg)](https://codecov.io/gh/contentful/ContentfulBundle)
+[![Packagist](https://img.shields.io/packagist/v/contentful/contentful-bundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/contentful/contentful-bundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
+[![Travis](https://img.shields.io/travis/contentful/ContentfulBundle.svg?style=for-the-badge)](https://travis-ci.org/contentful/ContentfulBundle)
+[![Packagist](https://img.shields.io/github/license/contentful/ContentfulBundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
+[![Codecov](https://img.shields.io/codecov/c/github/contentful/ContentfulBundle.svg?style=for-the-badge)](https://codecov.io/gh/contentful/ContentfulBundle)
 
 Symfony Bundle for the Contentful SDK.
 
-[Contentful][1] is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
+## What is Contentful?
 
-This Bundle requires at least PHP 5.5.9 and Symfony 2.7. PHP 7 and Symfony 3 are supported.
+[Contentful](https://www.contentful.com) provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
+
+This bundle requires at least PHP 5.5.9 and Symfony 2.7. PHP 7 and Symfony 3 are supported.
 
 # Setup
 
-## Prerequisites
-
-To make this bundle works, make sure the `@templating` service [is correctly declared](https://symfony.com/doc/3.2/templating/templating_service.html) by setting the following to the `framework` config:
-
-```yml
-framework:
-    templating: { engines: ['twig'] }
-```
-
 To add this package to your `composer.json` and install it execute the following command:
 
-```bash
-php composer.phar require contentful/contentful-bundle
-````
+``` bash
+composer require contentful/contentful-bundle
+```
 
 ## Add ContentfulBundle to your application kernel
 
-```php
+``` php
 // app/AppKernel.php
 public function registerBundles()
 {
@@ -45,38 +40,42 @@ public function registerBundles()
 
 The simplest configuration includes just the space ID and token:
 
-```yaml
+``` yaml
 contentful:
-  delivery:
-    space: cfexampleapi
-    token: b4c0n73n7fu1
+    delivery:
+        space: cfexampleapi
+        token: b4c0n73n7fu1
 ```
 
 You can also configure multiple clients and enable the preview mode:
 
-```yaml
+``` yaml
 contentful:
-  delivery:
-    default_client: exampleapi
-    clients:
-      exampleapi:
-        space: cfexampleapi
-        token: b4c0n73n7fu1
-      exapleapi_preview:
-        space: cfexampleapi
-        token: b4c0n73n7fu1
-        preview: true
+    delivery:
+        default_client: exampleapi
+        clients:
+            exampleapi:
+                space: cfexampleapi
+                token: b4c0n73n7fu1
+            exapleapi_preview:
+                space: cfexampleapi
+                token: b4c0n73n7fu1
+                preview: true
 ```
 
-Documentation
-=============
+## Requisites
+
+To make this bundle works, make sure the `@templating` service [is correctly declared](https://symfony.com/doc/3.2/templating/templating_service.html) by setting the following to the `framework` config:
+
+``` yml
+framework:
+    templating: { engines: ['twig'] }
+```
+
+## Documentation
 
 [Getting Started Tutorial](https://www.contentful.com/developers/docs/php/tutorials/getting-started-with-contentful-and-symfony/)
 
-License
-=======
+## License
 
-Copyright (c) 2015-2017 Contentful GmbH. Code released under the MIT license. See [LICENSE][2] for further details.
-
- [1]: https://www.contentful.com
- [2]: LICENSE
+Copyright (c) 2015-2017 Contentful GmbH. Code released under the MIT license. See [LICENSE](LICENSE) for further details.

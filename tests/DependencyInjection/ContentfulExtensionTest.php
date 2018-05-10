@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -16,20 +19,20 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
     public function testLoadEmpty()
     {
         $container = $this->getContainer();
-        $extension = new ContentfulExtension;
+        $extension = new ContentfulExtension();
 
         $container->registerExtension($extension);
 
         $extension->load([[], [], []], $container);
 
         // The parameter 'contentful.clients' has to be defined for the InfoCommand to work.
-        $this->assertEquals([], $container->getParameter('contentful.clients'));
+        $this->assertSame([], $container->getParameter('contentful.clients'));
     }
 
     public function testLoadDeliveryDefault()
     {
         $container = $this->getContainer();
-        $extension = new ContentfulExtension;
+        $extension = new ContentfulExtension();
 
         $container->registerExtension($extension);
 
@@ -38,16 +41,16 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
             [
                 'delivery' => [
                     'space' => 'abc',
-                    'token' => '123'
-                ]
+                    'token' => '123',
+                ],
             ],
-            []
+            [],
         ], $container);
 
         $definition = $container->getDefinition('contentful.delivery.default_client');
 
-        $this->assertEquals('123', $definition->getArgument(0));
-        $this->assertEquals('abc', $definition->getArgument(1));
+        $this->assertSame('123', $definition->getArgument(0));
+        $this->assertSame('abc', $definition->getArgument(1));
     }
 
     public function testLoadDeliveryOne()
@@ -61,23 +64,23 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
             [],
             [
                 'delivery' => [
-                    'clients' => ['default' => ['space' => 'abc', 'token' => '123']]
-                ]
+                    'clients' => ['default' => ['space' => 'abc', 'token' => '123']],
+                ],
             ],
-            []
+            [],
         ], $container);
 
         $definition = $container->getDefinition('contentful.delivery.default_client');
 
-        $this->assertEquals('123', $definition->getArgument(0));
-        $this->assertEquals('abc', $definition->getArgument(1));
+        $this->assertSame('123', $definition->getArgument(0));
+        $this->assertSame('abc', $definition->getArgument(1));
 
-        $this->assertEquals([
+        $this->assertSame([
             'default' => [
                 'service' => 'contentful.delivery.default_client',
                 'api' => 'DELIVERY',
-                'space' => 'abc'
-            ]
+                'space' => 'abc',
+            ],
         ], $container->getParameter('contentful.clients'));
     }
 
@@ -92,19 +95,19 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
             [],
             [
                 'delivery' => [
-                    'clients' => ['foo' => ['space' => 'abc', 'token' => '123']]
-                ]
+                    'clients' => ['foo' => ['space' => 'abc', 'token' => '123']],
+                ],
             ],
-            []
+            [],
         ], $container);
 
-        $this->assertEquals('contentful.delivery.foo_client', $container->getAlias('contentful.delivery'));
+        $this->assertSame('contentful.delivery.foo_client', $container->getAlias('contentful.delivery'));
     }
 
     public function testLoadDeliveryAlternateDefault()
     {
         $container = $this->getContainer();
-        $extension = new ContentfulExtension;
+        $extension = new ContentfulExtension();
 
         $container->registerExtension($extension);
 
@@ -113,26 +116,26 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
             [
                 'delivery' => [
                     'default_client' => 'foo',
-                    'clients' => ['foo' => ['space' => 'abc', 'token' => '123']]
-                ]
+                    'clients' => ['foo' => ['space' => 'abc', 'token' => '123']],
+                ],
             ],
-            []
+            [],
         ], $container);
 
-        $this->assertEquals('foo', $container->getParameter('contentful.delivery.default_client'));
+        $this->assertSame('foo', $container->getParameter('contentful.delivery.default_client'));
 
         $definition = $container->getDefinition('contentful.delivery.foo_client');
 
-        $this->assertEquals('123', $definition->getArgument(0));
-        $this->assertEquals('abc', $definition->getArgument(1));
+        $this->assertSame('123', $definition->getArgument(0));
+        $this->assertSame('abc', $definition->getArgument(1));
 
-        $this->assertEquals('contentful.delivery.foo_client', $container->getAlias('contentful.delivery'));
+        $this->assertSame('contentful.delivery.foo_client', $container->getAlias('contentful.delivery'));
     }
 
     public function testLoadDeliveryMultiple()
     {
         $container = $this->getContainer();
-        $extension = new ContentfulExtension;
+        $extension = new ContentfulExtension();
 
         $container->registerExtension($extension);
 
@@ -143,34 +146,34 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
                     'default_client' => 'foo',
                     'clients' => [
                         'foo' => ['space' => 'abc', 'token' => '123'],
-                        'bar' => ['space' => 'def', 'token' => '456', 'preview' => true]
-                    ]
-                ]
+                        'bar' => ['space' => 'def', 'token' => '456', 'preview' => true],
+                    ],
+                ],
             ],
-            []
+            [],
         ], $container);
 
         $definition = $container->getDefinition('contentful.delivery.foo_client');
 
-        $this->assertEquals('123', $definition->getArgument(0));
-        $this->assertEquals('abc', $definition->getArgument(1));
+        $this->assertSame('123', $definition->getArgument(0));
+        $this->assertSame('abc', $definition->getArgument(1));
 
         $definition = $container->getDefinition('contentful.delivery.bar_client');
 
-        $this->assertEquals('456', $definition->getArgument(0));
-        $this->assertEquals('def', $definition->getArgument(1));
+        $this->assertSame('456', $definition->getArgument(0));
+        $this->assertSame('def', $definition->getArgument(1));
 
-        $this->assertEquals([
+        $this->assertSame([
             'foo' => [
                 'service' => 'contentful.delivery.foo_client',
                 'api' => 'DELIVERY',
-                'space' => 'abc'
+                'space' => 'abc',
             ],
             'bar' => [
                 'service' => 'contentful.delivery.bar_client',
                 'api' => 'PREVIEW',
-                'space' => 'def'
-            ]
+                'space' => 'def',
+            ],
         ], $container->getParameter('contentful.clients'));
     }
 }

@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -21,15 +24,15 @@ class ContentfulDataCollectorTest extends \PHPUnit_Framework_TestCase
                 'default_client' => 'foo',
                 'clients' => [
                     'foo' => ['space' => 'abc', 'token' => '123'],
-                    'bar' => ['space' => 'def', 'token' => '456', 'preview' => true]
-                ]
-            ]
+                    'bar' => ['space' => 'def', 'token' => '456', 'preview' => true],
+                ],
+            ],
         ];
 
         $dataCollector = new ContentfulDataCollector($arrayLogger, $clients);
 
-        $dataCollector->collect(new Request, new Response);
+        $dataCollector->collect(new Request(), new Response());
 
-        $this->assertEquals($clients, $dataCollector->getClients());
+        $this->assertSame($clients, $dataCollector->getClients());
     }
 }

@@ -1,15 +1,18 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
 namespace Contentful\ContentfulBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
 
 class InfoCommand extends ContainerAwareCommand
 {
@@ -24,23 +27,24 @@ class InfoCommand extends ContainerAwareCommand
     {
         $info = $this->getContainer()->getParameter('contentful.clients');
 
-        if (count($info) === 0) {
+        if (0 === \count($info)) {
             $output->writeln('<comment>There are no Contentful clients configured.</comment>');
+
             return;
         }
 
-        $info = array_map(function($item, $name) {
+        $info = \array_map(function ($item, $name) {
             return [
                 $name,
                 $item['service'],
                 $item['api'],
-                $item['space']
+                $item['space'],
             ];
-        }, $info, array_keys($info));
+        }, $info, \array_keys($info));
 
         $table = new Table($output);
         $table
-            ->setHeaders(array('Name', 'Service', 'API', 'Space'))
+            ->setHeaders(['Name', 'Service', 'API', 'Space'])
             ->setRows($info);
 
         $table->render();

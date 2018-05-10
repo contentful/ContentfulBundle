@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2015-2017 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -19,8 +22,8 @@ class DeliveryCacheClearer extends CacheClearer implements CacheClearerInterface
     /**
      * DeliveryCacheClearer constructor.
      *
-     * @param  string $spaceId
-     * @param  string $cacheSubDirectory
+     * @param string $spaceId
+     * @param string $cacheSubDirectory
      */
     public function __construct($spaceId, $cacheSubDirectory = '')
     {
@@ -35,7 +38,7 @@ class DeliveryCacheClearer extends CacheClearer implements CacheClearerInterface
     public function clear($cacheDir)
     {
         if (!empty($this->subDirectory)) {
-            $cacheDir .= '/' . $this->subDirectory;
+            $cacheDir .= '/'.$this->subDirectory;
         }
 
         parent::clear($cacheDir);

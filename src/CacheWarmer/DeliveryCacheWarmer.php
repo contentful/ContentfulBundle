@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2015-2017 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -20,8 +23,8 @@ class DeliveryCacheWarmer extends CacheWarmer implements CacheWarmerInterface
     /**
      * DeliveryCacheWarmer constructor.
      *
-     * @param  Client $client
-     * @param  string $cacheSubDirectory
+     * @param Client $client
+     * @param string $cacheSubDirectory
      */
     public function __construct(Client $client, $cacheSubDirectory = '')
     {
@@ -31,12 +34,12 @@ class DeliveryCacheWarmer extends CacheWarmer implements CacheWarmerInterface
     }
 
     /**
-     * @param  string $cacheDir
+     * @param string $cacheDir
      */
     public function warmUp($cacheDir)
     {
         if (!empty($this->subDirectory)) {
-            $cacheDir .= '/' . $this->subDirectory;
+            $cacheDir .= '/'.$this->subDirectory;
         }
 
         parent::warmUp($cacheDir);

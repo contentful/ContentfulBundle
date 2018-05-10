@@ -1,13 +1,16 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
 namespace Contentful\ContentfulBundle\Controller;
 
-use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
 
 class ProfilerController
 {
@@ -38,7 +41,7 @@ class ProfilerController
 
         return $this->templating->renderResponse('@Contentful/Collector/details.html.twig', [
             'requestIndex' => $requestIndex,
-            'entry' => $logEntry
+            'entry' => $logEntry,
         ]);
     }
 }

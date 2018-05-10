@@ -1,17 +1,20 @@
 <?php
+
 /**
- * @copyright 2015-2017 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
 namespace Contentful\ContentfulBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ContentfulExtension extends Extension
 {
@@ -20,7 +23,7 @@ class ContentfulExtension extends Extension
         $configuration = new Configuration($container->getParameter('kernel.debug'));
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
         if (!empty($config['delivery'])) {
@@ -30,23 +33,23 @@ class ContentfulExtension extends Extension
 
     protected function loadDelivery(array $config, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('delivery.xml');
 
         if (empty($config['default_client'])) {
-            $keys = array_keys($config['clients']);
-            $config['default_client'] = reset($keys);
+            $keys = \array_keys($config['clients']);
+            $config['default_client'] = \reset($keys);
         }
 
         $container->setParameter('contentful.delivery.default_client', $config['default_client']);
-        $container->setAlias('contentful.delivery', sprintf('contentful.delivery.%s_client', $config['default_client']));
+        $container->setAlias('contentful.delivery', \sprintf('contentful.delivery.%s_client', $config['default_client']));
 
         $clients = [];
         foreach ($config['clients'] as $name => $client) {
             $clients[$name] = [
-                'service' => sprintf('contentful.delivery.%s_client', $name),
+                'service' => \sprintf('contentful.delivery.%s_client', $name),
                 'api' => $client['preview'] ? 'PREVIEW' : 'DELIVERY',
-                'space' => $client['space']
+                'space' => $client['space'],
             ];
             $this->loadDeliveryClient($name, $client, $container);
             $this->loadDeliveryCacheWarmer($name, $client, $container);
@@ -69,17 +72,17 @@ class ContentfulExtension extends Extension
         }
 
         if ($client['cache']) {
-            $options['cacheDir'] = '%kernel.cache_dir%' . '/contentful';
+            $options['cacheDir'] = '%kernel.cache_dir%'.'/contentful';
         }
 
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
+            ->setDefinition(\sprintf('contentful.delivery.%s_client', $name), new DefinitionDecorator('contentful.delivery.client'))
             ->setArguments([
                 $client['token'],
                 $client['space'],
                 $client['preview'],
                 $client['default_locale'],
-                $options
+                $options,
             ])
         ;
     }
@@ -91,19 +94,19 @@ class ContentfulExtension extends Extension
         }
 
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_warmer', $name), new DefinitionDecorator('contentful.delivery.cache_warmer'))
+            ->setDefinition(\sprintf('contentful.delivery.%s_client.cache_warmer', $name), new DefinitionDecorator('contentful.delivery.cache_warmer'))
             ->setArguments([
-                new Reference(sprintf('contentful.delivery.%s_client', $name)),
-                'contentful'
+                new Reference(\sprintf('contentful.delivery.%s_client', $name)),
+                'contentful',
             ])
             ->addTag('kernel.cache_warmer')
         ;
 
         $container
-            ->setDefinition(sprintf('contentful.delivery.%s_client.cache_clearer', $name), new DefinitionDecorator('contentful.delivery.cache_clearer'))
+            ->setDefinition(\sprintf('contentful.delivery.%s_client.cache_clearer', $name), new DefinitionDecorator('contentful.delivery.cache_clearer'))
             ->setArguments([
                 $client['space'],
-                'contentful'
+                'contentful',
             ])
             ->addTag('kernel.cache_clearer')
         ;

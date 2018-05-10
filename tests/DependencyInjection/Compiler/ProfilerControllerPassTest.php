@@ -1,6 +1,9 @@
 <?php
+
 /**
- * @copyright 2016 Contentful GmbH
+ * This file is part of the ContentfulBundle package.
+ *
+ * @copyright 2016-2018 Contentful GmbH
  * @license   MIT
  */
 
@@ -17,7 +20,7 @@ class ProfilerControllerPassTest extends \PHPUnit_Framework_TestCase
     public function testProcessWhenProfilerIsNotPresent()
     {
         $container = $this->getContainer();
-        $compilerPass = new ProfilerControllerPass;
+        $compilerPass = new ProfilerControllerPass();
 
         $container->addCompilerPass($compilerPass);
         $compilerPass->process($container);
@@ -29,7 +32,7 @@ class ProfilerControllerPassTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainer();
         $container->setDefinition('profiler', new Definition());
-        $compilerPass = new ProfilerControllerPass;
+        $compilerPass = new ProfilerControllerPass();
 
         $container->addCompilerPass($compilerPass);
         $compilerPass->process($container);
