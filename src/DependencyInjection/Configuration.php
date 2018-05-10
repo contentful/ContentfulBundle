@@ -81,7 +81,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $node = $treeBuilder->root('clients');
 
-        /** @var $connectionNode ArrayNodeDefinition */
+        /** @var ArrayNodeDefinition */
         $connectionNode = $node
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
