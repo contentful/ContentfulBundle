@@ -65,7 +65,7 @@ contentful:
 
 ## Requisites
 
-To make this bundle works, make sure the `@templating` service [is correctly declared](https://symfony.com/doc/3.2/templating/templating_service.html) by setting the following to the `framework` config:
+In order for this bundle to work, make sure the `@templating` service [is correctly declared](https://symfony.com/doc/3.2/templating/templating_service.html) by setting the following to the `framework` config:
 
 ``` yml
 framework:
