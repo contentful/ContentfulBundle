@@ -101,7 +101,7 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
             [],
         ], $container);
 
-        $this->assertSame('contentful.delivery.foo_client', $container->getAlias('contentful.delivery'));
+        $this->assertSame('contentful.delivery.foo_client', (string) $container->getAlias('contentful.delivery'));
     }
 
     public function testLoadDeliveryAlternateDefault()
@@ -129,7 +129,7 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('123', $definition->getArgument(0));
         $this->assertSame('abc', $definition->getArgument(1));
 
-        $this->assertSame('contentful.delivery.foo_client', $container->getAlias('contentful.delivery'));
+        $this->assertSame('contentful.delivery.foo_client', (string) $container->getAlias('contentful.delivery'));
     }
 
     public function testLoadDeliveryMultiple()

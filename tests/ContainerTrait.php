@@ -14,6 +14,11 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 trait ContainerTrait
 {
+    /**
+     * @param string $environment
+     *
+     * @return ContainerBuilder
+     */
     protected function getContainer($environment = 'test')
     {
         return new ContainerBuilder(new ParameterBag([
@@ -21,7 +26,7 @@ trait ContainerTrait
             'kernel.bundles' => [],
             'kernel.cache_dir' => \sys_get_temp_dir(),
             'kernel.environment' => $environment,
-            'kernel.root_dir' => __DIR__.'/../../', // src dir
+            'kernel.root_dir' => __DIR__.'/../src/',
         ]));
     }
 }
