@@ -7,20 +7,18 @@
     </parameters>
 
     <services>
-        <service id="contentful.logger.null" class="Contentful\Log\NullLogger" public="false" />
-
-        <service id="contentful.logger.array" class="Contentful\Log\ArrayLogger" public="false" />
+        <defaults public="false" />
 
         <service id="contentful.data_collector"
                  class="Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector"
                  public="false"
         >
-            <argument type="service" id="contentful.logger.array" />
+            <argument type="tagged" tag="contentful.client" />
             <argument>%contentful.clients%</argument>
 
             <tag name="data_collector"
                  id="contentful"
-                 template="ContentfulBundle:Collector:contentful"
+                 template="@Contentful/Collector/contentful.html.twig"
                  priority="250"
             />
         </service>

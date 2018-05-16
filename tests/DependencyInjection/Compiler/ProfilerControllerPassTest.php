@@ -11,9 +11,10 @@ namespace Contentful\Tests\ContentfulBundle\DependencyInjection\Compiler;
 
 use Contentful\ContentfulBundle\DependencyInjection\Compiler\ProfilerControllerPass;
 use Contentful\Tests\ContentfulBundle\ContainerTrait;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Definition;
 
-class ProfilerControllerPassTest extends \PHPUnit_Framework_TestCase
+class ProfilerControllerPassTest extends TestCase
 {
     use ContainerTrait;
 

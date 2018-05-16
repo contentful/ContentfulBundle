@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-    <services>
-        <service id="contentful.profiler_controller" class="Contentful\ContentfulBundle\Controller\ProfilerController" public="true" autowire="true">
-            <argument type="service" id="profiler" />
 
-            <tag name="controller.service_arguments" />
+    <services>
+        <service id="contentful.command.info" class="Contentful\ContentfulBundle\Command\InfoCommand">
+            <tag name="console.command" command="contentful:info" />
         </service>
     </services>
+
 </container>
