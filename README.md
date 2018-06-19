@@ -22,7 +22,20 @@ To add this package to your `composer.json` and install it execute the following
 composer require contentful/contentful-bundle
 ```
 
-## Add ContentfulBundle to your application kernel
+## Add ContentfulBundle to your application
+
+### Symfony 4
+
+``` php
+// config/bundles.php
+return [
+    // ...
+    Contentful\ContentfulBundle\ContentfulBundle::class => ['dev' => true],
+    // ...
+];
+```
+
+### Symfony 3
 
 ``` php
 // app/AppKernel.php
@@ -38,7 +51,7 @@ public function registerBundles()
 
 ## Configuration example
 
-The simplest configuration includes just the space ID and token:
+The simplest configuration includes just the space ID and token. Add these settings to either `app/config.yml` (Symfony 3) or create `config/packages/contentful.yaml` (Symfony 4):
 
 ``` yaml
 contentful:
@@ -65,12 +78,7 @@ contentful:
 
 ## Requisites
 
-In order for this bundle to work, make sure the `@templating` service [is correctly declared](https://symfony.com/doc/3.2/templating/templating_service.html) by setting the following to the `framework` config:
-
-``` yml
-framework:
-    templating: { engines: ['twig'] }
-```
+This bundle uses Twig. Make sure it is enabled in your configuration.
 
 ## Documentation
 
