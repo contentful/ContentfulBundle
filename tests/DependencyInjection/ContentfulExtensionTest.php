@@ -11,8 +11,9 @@ namespace Contentful\Tests\ContentfulBundle\DependencyInjection;
 
 use Contentful\ContentfulBundle\DependencyInjection\ContentfulExtension;
 use Contentful\Tests\ContentfulBundle\ContainerTrait;
+use PHPUnit\Framework\TestCase;
 
-class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
+class ContentfulExtensionTest extends TestCase
 {
     use ContainerTrait;
 
@@ -37,14 +38,12 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
         $container->registerExtension($extension);
 
         $extension->load([
-            [],
             [
                 'delivery' => [
                     'space' => 'abc',
                     'token' => '123',
                 ],
             ],
-            [],
         ], $container);
 
         $definition = $container->getDefinition('contentful.delivery.default_client');
@@ -61,13 +60,11 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
         $container->registerExtension($extension);
 
         $extension->load([
-            [],
             [
                 'delivery' => [
                     'clients' => ['default' => ['space' => 'abc', 'token' => '123']],
                 ],
             ],
-            [],
         ], $container);
 
         $definition = $container->getDefinition('contentful.delivery.default_client');
@@ -80,6 +77,8 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
                 'service' => 'contentful.delivery.default_client',
                 'api' => 'DELIVERY',
                 'space' => 'abc',
+                'environment' => 'master',
+                'cache' => '',
             ],
         ], $container->getParameter('contentful.clients'));
     }
@@ -92,13 +91,11 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
         $container->registerExtension($extension);
 
         $extension->load([
-            [],
             [
                 'delivery' => [
                     'clients' => ['foo' => ['space' => 'abc', 'token' => '123']],
                 ],
             ],
-            [],
         ], $container);
 
         $this->assertSame('contentful.delivery.foo_client', (string) $container->getAlias('contentful.delivery'));
@@ -112,14 +109,12 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
         $container->registerExtension($extension);
 
         $extension->load([
-            [],
             [
                 'delivery' => [
                     'default_client' => 'foo',
                     'clients' => ['foo' => ['space' => 'abc', 'token' => '123']],
                 ],
             ],
-            [],
         ], $container);
 
         $this->assertSame('foo', $container->getParameter('contentful.delivery.default_client'));
@@ -140,7 +135,6 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
         $container->registerExtension($extension);
 
         $extension->load([
-            [],
             [
                 'delivery' => [
                     'default_client' => 'foo',
@@ -150,7 +144,6 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            [],
         ], $container);
 
         $definition = $container->getDefinition('contentful.delivery.foo_client');
@@ -168,11 +161,15 @@ class ContentfulExtensionTest extends \PHPUnit_Framework_TestCase
                 'service' => 'contentful.delivery.foo_client',
                 'api' => 'DELIVERY',
                 'space' => 'abc',
+                'environment' => 'master',
+                'cache' => '',
             ],
             'bar' => [
                 'service' => 'contentful.delivery.bar_client',
                 'api' => 'PREVIEW',
                 'space' => 'def',
+                'environment' => 'master',
+                'cache' => '',
             ],
         ], $container->getParameter('contentful.clients'));
     }

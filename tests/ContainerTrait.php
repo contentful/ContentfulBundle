@@ -19,7 +19,7 @@ trait ContainerTrait
      *
      * @return ContainerBuilder
      */
-    protected function getContainer($environment = 'test')
+    protected function getContainer($environment = 'test'): ContainerBuilder
     {
         return new ContainerBuilder(new ParameterBag([
             'kernel.debug' => false,

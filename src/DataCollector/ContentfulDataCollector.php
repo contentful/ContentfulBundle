@@ -9,8 +9,8 @@
 
 namespace Contentful\ContentfulBundle\DataCollector;
 
-use Contentful\Log\ArrayLogger;
-use Contentful\Log\LogEntry;
+use Contentful\Core\Api\Message;
+use Contentful\Delivery\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -18,25 +18,32 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 class ContentfulDataCollector extends DataCollector
 {
     /**
-     * @var ArrayLogger
-     */
-    private $logger;
-
-    /**
-     * @var array
+     * @var Client[]
      */
     private $clients = [];
 
     /**
      * ContentfulDataCollector constructor.
      *
-     * @param ArrayLogger $logger
-     * @param array       $clients
+     * @param Client[] $clients        This is actually a Generator, but it behaves as an array of Client objects
+     * @param array    $configurations
      */
-    public function __construct(ArrayLogger $logger, array $clients = [])
+    public function __construct($clients = [], $configurations = [])
     {
-        $this->logger = $logger;
-        $this->clients = $clients;
+        $this->reset();
+
+        foreach ($clients as $index => $client) {
+            $config = \array_shift($configurations);
+            $this->data['clients'][] = [
+                'api' => $client->getApi(),
+                'space' => $client->getSpaceId(),
+                'environment' => $client->getEnvironmentId(),
+                'service' => $config['service'],
+                'cache' => $config['cache'],
+            ];
+
+            $this->clients[] = $client;
+        }
     }
 
     /**
@@ -46,53 +53,56 @@ class ContentfulDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $this->data = [
-            'logs' => $this->logger->getLogs(),
-            'clients' => $this->clients,
-        ];
-    }
+        $messages = [];
+        foreach ($this->clients as $client) {
+            $messages = \array_merge($messages, $client->getMessages());
+        }
 
-    /**
-     * @return LogEntry[]
-     */
-    public function getLogs()
-    {
-        return $this->data['logs'];
-    }
-
-    /**
-     * @return int
-     */
-    public function getRequestCount()
-    {
-        return \count($this->data['logs']);
-    }
-
-    /**
-     * @return float
-     */
-    public function getTotalDuration()
-    {
-        return \array_reduce($this->data['logs'], function ($carry, LogEntry $item) {
-            $duration = $item->getDuration();
-
-            return $carry + $duration;
-        }, 0.0);
-    }
-
-    public function getErrorCount()
-    {
-        return \array_reduce($this->data['logs'], function ($carry, LogEntry $item) {
-            return $carry + ($item->isError() ? 1 : 0);
-        }, 0);
+        $this->data['messages'] = $messages;
     }
 
     /**
      * @return array
      */
-    public function getClients()
+    public function getClients(): array
     {
         return $this->data['clients'];
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getMessages(): array
+    {
+        return $this->data['messages'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getRequestCount(): int
+    {
+        return \count($this->data['messages']);
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalDuration(): float
+    {
+        return \array_reduce($this->data['messages'], function (float $carry, Message $message) {
+            return $carry + $message->getDuration();
+        }, 0.0);
+    }
+
+    /**
+     * @return int
+     */
+    public function getErrorCount(): int
+    {
+        return \array_reduce($this->data['messages'], function (int $carry, Message $message) {
+            return $carry + ($message->isError() ? 1 : 0);
+        }, 0);
     }
 
     /**
@@ -108,6 +118,9 @@ class ContentfulDataCollector extends DataCollector
      */
     public function reset()
     {
-        $this->data['logs'] = [];
+        $this->data = [
+            'messages' => [],
+            'clients' => [],
+        ];
     }
 }

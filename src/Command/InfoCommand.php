@@ -10,9 +10,9 @@
 namespace Contentful\ContentfulBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class InfoCommand extends ContainerAwareCommand
 {
@@ -25,28 +25,31 @@ class InfoCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Contentful clients');
+
         $info = $this->getContainer()->getParameter('contentful.clients');
 
         if (0 === \count($info)) {
-            $output->writeln('<comment>There are no Contentful clients configured.</comment>');
+            $io->text('There are no Contentful clients currently configured.');
 
             return;
         }
 
-        $info = \array_map(function ($item, $name) {
+        $data = \array_map(function (array $item, string $name) {
             return [
                 $name,
                 $item['service'],
                 $item['api'],
                 $item['space'],
+                $item['environment'],
+                $item['cache'] ?: 'Not enabled',
             ];
         }, $info, \array_keys($info));
 
-        $table = new Table($output);
-        $table
-            ->setHeaders(['Name', 'Service', 'API', 'Space'])
-            ->setRows($info);
-
-        $table->render();
+        $io->table(
+            ['Name', 'Service', 'API', 'Space', 'Environment', 'Cache'],
+            $data
+        );
     }
 }

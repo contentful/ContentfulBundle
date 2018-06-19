@@ -10,29 +10,42 @@
 namespace Contentful\Tests\ContentfulBundle\DataCollector;
 
 use Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector;
-use Contentful\Log\ArrayLogger;
+use Contentful\Delivery\Client;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ContentfulDataCollectorTest extends \PHPUnit_Framework_TestCase
+class ContentfulDataCollectorTest extends TestCase
 {
     public function testGetClients()
     {
-        $arrayLogger = new ArrayLogger();
-        $clients = [
-            'delivery' => [
-                'default_client' => 'foo',
-                'clients' => [
-                    'foo' => ['space' => 'abc', 'token' => '123'],
-                    'bar' => ['space' => 'def', 'token' => '456', 'preview' => true],
-                ],
-            ],
+        $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
+        $configurations = [
+            ['service' => 'default.client', 'cache' => false],
         ];
 
-        $dataCollector = new ContentfulDataCollector($arrayLogger, $clients);
+        $client->getSpace();
+        $client->getEnvironment();
+        $client->getContentTypes();
 
+        $dataCollector = new ContentfulDataCollector([$client], $configurations);
         $dataCollector->collect(new Request(), new Response());
 
-        $this->assertSame($clients, $dataCollector->getClients());
+        $this->assertSame('contentful', $dataCollector->getName());
+
+        $expected = [
+            [
+                'api' => 'DELIVERY',
+                'space' => 'cfexampleapi',
+                'environment' => 'master',
+                'service' => 'default.client',
+                'cache' => false,
+            ],
+        ];
+        $this->assertSame($expected, $dataCollector->getClients());
+        $this->assertCount(3, $dataCollector->getMessages());
+        $this->assertSame(3, $dataCollector->getRequestCount());
+        $this->assertGreaterThan(0, $dataCollector->getTotalDuration());
+        $this->assertSame(0, $dataCollector->getErrorCount());
     }
 }

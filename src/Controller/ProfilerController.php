@@ -9,8 +9,10 @@
 
 namespace Contentful\ContentfulBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Twig\Environment;
 
 class ProfilerController
 {
@@ -20,28 +22,44 @@ class ProfilerController
     private $profiler;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
     private $templating;
 
-    public function __construct(Profiler $profiler, EngineInterface $templating)
+    /**
+     * ProfilerController constructor.
+     *
+     * @param Profiler    $profiler
+     * @param Environment $templating
+     */
+    public function __construct(Profiler $profiler, Environment $twig)
     {
         $this->profiler = $profiler;
-        $this->templating = $templating;
+        $this->twig = $twig;
     }
 
-    public function detailsAction($token, $requestIndex)
+    /**
+     * @param string $token
+     * @param int    $requestIndex
+     *
+     * @return Response
+     */
+    public function detailsAction(string $token, int $requestIndex): Response
     {
         $this->profiler->disable();
 
         $profile = $this->profiler->loadProfile($token);
-        $logs = $profile->getCollector('contentful')->getLogs();
+        /** @var ContentfulDataCollector $collector */
+        $collector = $profile->getCollector('contentful');
+        $messages = $collector->getMessages();
 
-        $logEntry = $logs[$requestIndex];
+        $message = $messages[$requestIndex];
 
-        return $this->templating->renderResponse('@Contentful/Collector/details.html.twig', [
+        $body = $this->twig->render('@Contentful/Collector/details.html.twig', [
             'requestIndex' => $requestIndex,
-            'entry' => $logEntry,
+            'message' => $message,
         ]);
+
+        return new Response($body);
     }
 }

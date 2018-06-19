@@ -10,8 +10,8 @@
             </call>
         </service>
 
-        <service id="contentful.delivery.cache_warmer" class="Contentful\ContentfulBundle\CacheWarmer\DeliveryCacheWarmer" abstract="true" />
+        <service id="contentful.delivery.cache_warmer" class="Contentful\ContentfulBundle\Cache\DeliveryCacheWarmer" abstract="true" />
 
-        <service id="contentful.delivery.cache_clearer" class="Contentful\ContentfulBundle\CacheClearer\DeliveryCacheClearer" abstract="true" />
+        <service id="contentful.delivery.cache_clearer" class="Contentful\ContentfulBundle\Cache\DeliveryCacheClearer" abstract="true" />
     </services>
 </container>

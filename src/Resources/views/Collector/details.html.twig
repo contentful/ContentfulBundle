@@ -7,33 +7,38 @@
 
 <h2>API Call #{{ requestIndex }}</h2>
 
+<table>
+    <thead>
+        <tr>
+            <th>API</th>
+            <th>URL</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ message.api }}</td>
+            <td>{{ message.request.uri }}</td>
+            <td>{{ '%0.0f'|format(message.duration * 1000) }} ms</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Request</h3>
+
 <div class="metrics">
     <div class="metric">
-        <span class="value">{{ '%0.0f'|format(entry.duration * 1000) }} <span class="unit">ms</span></span>
-        <span class="label">Time</span>
-    </div>
-
-    <div class="metric">
-        <span class="value">{{ entry.api }}</span>
-        <span class="label">API</span>
-    </div>
-</div>
-
-<h2>Request</h2>
-
-<div class="metrics">
-    <div class="metric">
-        <span class="value">{{ entry.request.method }}</span>
+        <span class="value">{{ message.request.method }}</span>
         <span class="label">Method</span>
     </div>
 
     <div class="metric">
-        <span class="value">HTTP {{ entry.request.protocolVersion }}</span>
+        <span class="value">HTTP {{ message.request.protocolVersion }}</span>
         <span class="label">Protocol</span>
     </div>
 </div>
 
-<h3>Headers</h3>
+<h4>Request headers</h4>
 
 <table>
     <thead>
@@ -43,33 +48,33 @@
     </tr>
     </thead>
     <tbody>
-    {% for name, value in entry.request.headers %}
+    {% for name, value in message.request.headers %}
         <tr>
-            <td style="min-width: 120px;">{{ name }}</td>
-            <td>{{ value|join(', ') }}</td>
+            <th>{{ name }}</th>
+            <td>{{ dump(value|join(', ')) }}</td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-<h2>Response</h2>
+<h3>Response</h3>
 
-{% if entry.response is empty %}
+{% if message.response is empty %}
     <p>No response has been recorded.</p>
 {% else %}
     <div class="metrics">
         <div class="metric">
-            <span class="value">{{ entry.response.statusCode }}</span>
+            <span class="value">{{ message.response.statusCode }}</span>
             <span class="label">Status</span>
         </div>
 
         <div class="metric">
-            <span class="value">HTTP {{ entry.response.protocolVersion }}</span>
+            <span class="value">HTTP {{ message.response.protocolVersion }}</span>
             <span class="label">Protocol</span>
         </div>
     </div>
 
-    <h3>Headers</h3>
+    <h4>Response headers</h4>
 
     <table>
         <thead>
@@ -79,24 +84,24 @@
         </tr>
         </thead>
         <tbody>
-        {% for name, value in entry.response.headers %}
+        {% for name, value in message.response.headers %}
             <tr>
-                <td style="min-width: 120px;">{{ name }}</td>
-                <td>{{ value|join(', ') }}</td>
+                <th>{{ name }}</th>
+                <td>{{ dump(value|join(', ')) }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <h3>Body</h3>
+    <h4>Response body</h4>
 
-    <pre>{{ entry.response.body }}</pre>
+    <pre>{{ message.response.body }}</pre>
 {%  endif %}
 
-<h2>Exception</h2>
+<h3>Exception</h3>
 
-{% if entry.exception is empty %}
-    <p>No exception was thrown and caught during the API call.</p>
+{% if message.exception is empty %}
+    <p>No exception was thrown by API call.</p>
 {% else %}
     {{ dump(entry.exception) }}
 {%  endif %}

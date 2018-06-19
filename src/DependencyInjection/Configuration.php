@@ -46,25 +46,26 @@ class Configuration implements ConfigurationInterface
                             && !\array_key_exists('clients', $value)
                             && !\array_key_exists('client', $value);
                     })
-                    ->then(function ($v) {
+                    ->then(function ($value) {
                         // Key that should not be rewritten to the client config
                         $excludedKeys = ['default_client' => true];
                         $connection = [];
-                        foreach ($v as $key => $value) {
+
+                        foreach (\array_keys($value) as $key) {
                             if (isset($excludedKeys[$key])) {
                                 continue;
                             }
 
-                            $connection[$key] = $v[$key];
-                            unset($v[$key]);
+                            $connection[$key] = $value[$key];
+                            unset($value[$key]);
                         }
 
-                        $v['default_client'] = isset($v['default_client']) ? (string) $v['default_client'] : 'default';
-                        $v['clients'] = [
-                            $v['default_client'] => $connection,
+                        $value['default_client'] = $value['default_client'] ?? 'default';
+                        $value['clients'] = [
+                            $value['default_client'] => $connection,
                         ];
 
-                        return $v;
+                        return $value;
                     })
                 ->end()
                 ->children()
@@ -81,7 +82,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $node = $treeBuilder->root('clients');
 
-        /** @var ArrayNodeDefinition */
+        /** @var ArrayNodeDefinition $connectionNode */
         $connectionNode = $node
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
@@ -98,24 +99,38 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->cannotBeEmpty()
                 ->end()
+                ->scalarNode('environment')
+                    ->defaultValue('master')
+                    ->cannotBeEmpty()
+                ->end()
                 ->booleanNode('preview')
                     ->defaultFalse()
-                ->end()
-                ->booleanNode('request_logging')
-                    ->defaultValue($this->debug)
                 ->end()
                 ->scalarNode('default_locale')
                     ->defaultNull()
                 ->end()
-                ->scalarNode('uri_override')
+                ->scalarNode('base_uri')
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('http_client')
-                  ->info('Override the default HTTP client with a custom Guzzle instance. Service ID as string.')
-                  ->cannotBeEmpty()
+                    ->info('Override the default HTTP client with a custom Guzzle instance. Service ID as string.')
+                    ->cannotBeEmpty()
                 ->end()
-                ->booleanNode('cache')
-                  ->defaultValue(!$this->debug)
+                ->scalarNode('cache')
+                    ->info('The cache to use. If set to true, the "cache.system" service will be used, otherwise specify the service ID of a custom PSR-6 compatible service')
+                    ->defaultFalse()
+                    ->validate()
+                        ->ifTrue(function ($value) {
+                            return true === $value;
+                        })
+                        ->then(function () {
+                            return 'cache.app';
+                        })
+                    ->end()
+                ->end()
+                ->booleanNode('cache_auto_warmup')
+                    ->info('If set to true, the system cache will be populated through natural use.')
+                    ->defaultFalse()
                 ->end()
             ->end()
         ;
