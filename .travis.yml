@@ -81,14 +81,6 @@ after_success:
       sh ./scripts/prepare-docs.sh
     fi
 
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: build/docs
-  on:
-    condition: ($TRAVIS_PULL_REQUEST == false || $TRAVIS_TAG != '') && $BUILD_LEAD == 1
-
 notifications:
   slack:
     secure: YqqA453JbmzK72fmK5hAFeyaX7t5w2McMWA81jFweCeGOE7z6sfRgHgjSvsd2+POhG/tEWaQevMxDiGJEgD7/l33h7JDpRMSxGPRJ8hWjElEpDNOXFwVv/iqHZHHVynhWgVMhS/iyQeTwgDzKQ/CnjHVL6GyuSzMIHC1Bvb+kvMQPkMoUbLP6DbUFZYm3Qsu9/GSeXOARyZRr1NuYwQJag58kixnSy6FZc6X3H9qP+OVGF6MmvZjtH2XCi+5CRBo1IPd+/wd6Y2SNxEuJ0jQX44euvrPx8Sa5Q6B8UPYZIbbZ6sfoePDin4Pj8LYpK/T4rBQGCQTIZX1+QV+faqPnvxvEMamYSBtx9odGIBg2gAKaJU5cYuyDNax6srUDNLJ2YLU1ifCMHHj3tHjvkgxGPSAAZsDiBkhLQ12thiFYTmhVOLLl+PNki5G5kR9hdBd9m/ORVTESYQf3sfpzCTMUgjWOun8D+YwhxP8KkMmzxA7Mr6DYYIW0VgpdIBZjx0ZtL2inclAylssuwEv+RbSeZbtEF1IlIJliWGx8XPx2Nl0R482IAkuyp+uCK8yN+8j7P0vgH+YzgfBiNqIS1rT32A7y+6n/a7fqC71woadCEWRb0V/khJomlbzXBmawwAo5j1qLOG49evv2IhAYmGa38YGeiPT8QLFlchuKrYPWZU=
