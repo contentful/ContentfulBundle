@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ContentfulBundle extends Bundle
 {
-    const VERSION = '3.0.0';
+    const VERSION = '3.1.0-dev';
 
     public function build(ContainerBuilder $container)
     {

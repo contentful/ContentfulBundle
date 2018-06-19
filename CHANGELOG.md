@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/3.0.0...HEAD)
+
 ## [3.0.0](https://github.com/contentful/ContentfulBundle/tree/2.0.0) (2018-06-19)
 
 **ATTENTION**: This release contains breaking changes. Please take extra care when updating to this version.
