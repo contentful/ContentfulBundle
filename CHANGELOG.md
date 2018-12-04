@@ -5,6 +5,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/3.0.0...HEAD)
 
+<!-- PENDING-CHANGES -->
+**ATTENTION**: This release contains breaking changes. Please take extra care when updating to this version.
+
+### Changed
+
+* The bundle now requires the Contentful Delivery SDK version 4. Please check its [upgrade guide](https://github.com/contentful/contentful.php/blob/master/UPGRADE-4.0.md) for more. **[BREAKING]**
+* The configuration format has been changed. Refer to the [upgrade guide](UPGRADE-4.0.md) for more. **[BREAKING]**
+* The command `contentful:info` was renamed `contentful:delivery:info`.
+
+### Added
+
+* The command `contentful:delivery:debug` was added, and it will print info about the space, locales and content types of the selected client.
+* Configured clients now support autowiring by type-hinting either `Contentful\Delivery\Client` or `Contentful\Delivery\Client\ClientInterface` (which is the recommended way). If multiple clients are configured, the autowired client will always be the one configured using `default: true`.
+<!-- /PENDING-CHANGES -->
+
 ## [3.0.0](https://github.com/contentful/ContentfulBundle/tree/2.0.0) (2018-06-19)
 
 **ATTENTION**: This release contains breaking changes. Please take extra care when updating to this version.

@@ -1,0 +1,39 @@
+
+Debug client
+============
+
+ Full service ID: contentful.delivery.main_client
+
+Space
+-----
+
+ Contentful Example API
+
+ // https://app.contentful.com/spaces/cfexampleapi/environments/master                                                  
+
+Locales (2)
+-----------
+
+ ------------------------ --------- ------- --------------- 
+  ID                       Name      Code    Fallback Code  
+ ------------------------ --------- ------- --------------- 
+  2oQPjMCL9bQkylziydLh57   English   en-US                  
+  3zpZmkZrHTIekHmXgflXaV   Klingon   tlh     en-US          
+ ------------------------ --------- ------- --------------- 
+
+ // https://app.contentful.com/spaces/cfexampleapi/environments/master/locales                                          
+
+Content types (4)
+-----------------
+
+ ------------------------ ------- -------- --------- ------------- 
+  ID                       Name    Fields   Entries   Description  
+ ------------------------ ------- -------- --------- ------------- 
+  dog                      Dog     3        2         Bark!        
+  1t9IbcfdCk6m04uISSsaIK   City    2        4                      
+  human                    Human   4        1                      
+  cat                      Cat     8        3         Meow.        
+ ------------------------ ------- -------- --------- ------------- 
+
+ // https://app.contentful.com/spaces/cfexampleapi/environments/master/content_types                                    
+

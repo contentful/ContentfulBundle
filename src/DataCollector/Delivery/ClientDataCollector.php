@@ -1,13 +1,15 @@
 <?php
 
 /**
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
-namespace Contentful\ContentfulBundle\DataCollector;
+declare(strict_types=1);
+
+namespace Contentful\ContentfulBundle\DataCollector\Delivery;
 
 use Contentful\Core\Api\Message;
 use Contentful\Delivery\Client;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-class ContentfulDataCollector extends DataCollector
+class ClientDataCollector extends DataCollector
 {
     /**
      * @var Client[]
@@ -23,8 +25,6 @@ class ContentfulDataCollector extends DataCollector
     private $clients = [];
 
     /**
-     * ContentfulDataCollector constructor.
-     *
      * @param Client[] $clients        This is actually a Generator, but it behaves as an array of Client objects
      * @param array    $configurations
      */
@@ -47,11 +47,9 @@ class ContentfulDataCollector extends DataCollector
     }
 
     /**
-     * @param Request         $request
-     * @param Response        $response
-     * @param \Exception|null $exception
+     * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Exception $exception = \null)
     {
         $messages = [];
         foreach ($this->clients as $client) {
@@ -108,7 +106,7 @@ class ContentfulDataCollector extends DataCollector
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'contentful';
     }

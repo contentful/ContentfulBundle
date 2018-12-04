@@ -1,11 +1,13 @@
 <?php
 
 /**
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
+
+declare(strict_types=1);
 
 namespace Contentful\ContentfulBundle;
 
@@ -15,8 +17,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ContentfulBundle extends Bundle
 {
-    const VERSION = '3.1.0-dev';
-
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new ProfilerControllerPass());

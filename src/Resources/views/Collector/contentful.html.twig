@@ -1,7 +1,7 @@
 {#
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
 #}
 
@@ -98,20 +98,23 @@
                 </tr>
             </thead>
             <tbody>
-            {% for message in collector.messages %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ message.api }}</td>
-                    <td>{{ message.request.uri }}</td>
-                    <td>{{ '%0.0f'|format(message.duration * 1000) }} ms</td>
-                    <td><a class="link-inverse" href="{{ path('_profiler', { panel: 'contentful', token: token, page: 'details', requestIndex: loop.index0 }) }}">Details</a></td>
-                </tr>
-            {% endfor %}
+                {% for message in collector.messages %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ message.api }}</td>
+                        <td>{{ message.request.uri }}</td>
+                        <td>{{ '%0.0f'|format(message.duration * 1000) }} ms</td>
+                        <td>
+                            <a class="link-inverse" href="{{ path('_profiler', { panel: 'contentful', token: token, page: 'details', requestIndex: loop.index0 }) }}">Details</a>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     {% endif %}
 
     <h2>Clients</h2>
+
     {% if not collector.clients %}
         <div class="empty">
             <p>There are no Contentful clients configured.</p>
@@ -128,15 +131,15 @@
                 </tr>
             </thead>
             <tbody>
-            {% for client in collector.clients %}
-                <tr>
-                    <td>{{ client.service }}</td>
-                    <td>{{ client.api }}</td>
-                    <td>{{ client.space }}</td>
-                    <td>{{ client.environment }}</td>
-                    <td>{{ client.cache ?: 'Not enabled' }}</td>
-                </tr>
-            {% endfor %}
+                {% for client in collector.clients %}
+                    <tr>
+                        <td>{{ client.service }}</td>
+                        <td>{{ client.api }}</td>
+                        <td>{{ client.space }}</td>
+                        <td>{{ client.environment }}</td>
+                        <td>{{ client.cache ?: 'Not enabled' }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     {% endif %}
