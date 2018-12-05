@@ -1,7 +1,12 @@
 {
     "name": "contentful/contentful-bundle",
     "description": "A Symfony Bundle to integrate the Contentful CDA SDK",
-    "keywords": ["contentful", "cms", "sdk", "symfony"],
+    "keywords": [
+        "contentful",
+        "cms",
+        "sdk",
+        "symfony"
+    ],
     "type": "symfony-bundle",
     "license": "MIT",
     "require": {
@@ -37,7 +42,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0.0-dev"
+            "dev-master": "4.1.0-dev"
         }
     }
 }
