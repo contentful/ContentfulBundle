@@ -3,9 +3,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/3.0.0...HEAD)
+## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/4.0.0...HEAD)
 
 <!-- PENDING-CHANGES -->
+> No meaningful changes since last release.
+<!-- /PENDING-CHANGES -->
+
+## [4.0.0](https://github.com/contentful/ContentfulBundle/tree/4.0.0) (2018-12-05)
+
 **ATTENTION**: This release contains breaking changes. Please take extra care when updating to this version.
 
 ### Changed
@@ -18,7 +23,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * The command `contentful:delivery:debug` was added, and it will print info about the space, locales and content types of the selected client.
 * Configured clients now support autowiring by type-hinting either `Contentful\Delivery\Client` or `Contentful\Delivery\Client\ClientInterface` (which is the recommended way). If multiple clients are configured, the autowired client will always be the one configured using `default: true`.
-<!-- /PENDING-CHANGES -->
 
 ## [3.0.0](https://github.com/contentful/ContentfulBundle/tree/2.0.0) (2018-06-19)
 
