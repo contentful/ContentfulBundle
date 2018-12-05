@@ -1,7 +1,7 @@
 {#
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
 #}
 
@@ -48,12 +48,12 @@
     </tr>
     </thead>
     <tbody>
-    {% for name, value in message.request.headers %}
-        <tr>
-            <th>{{ name }}</th>
-            <td>{{ dump(value|join(', ')) }}</td>
-        </tr>
-    {% endfor %}
+        {% for name, value in message.request.headers %}
+            <tr>
+                <th>{{ name }}</th>
+                <td>{{ dump(value|join(', ')) }}</td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
 
@@ -84,12 +84,12 @@
         </tr>
         </thead>
         <tbody>
-        {% for name, value in message.response.headers %}
-            <tr>
-                <th>{{ name }}</th>
-                <td>{{ dump(value|join(', ')) }}</td>
-            </tr>
-        {% endfor %}
+            {% for name, value in message.response.headers %}
+                <tr>
+                    <th>{{ name }}</th>
+                    <td>{{ dump(value|join(', ')) }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 

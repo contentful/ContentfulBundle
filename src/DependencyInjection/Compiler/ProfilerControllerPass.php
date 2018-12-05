@@ -1,33 +1,41 @@
 <?php
 
 /**
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\ContentfulBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\Config\FileLocator;
+use Contentful\ContentfulBundle\Controller\Delivery\ProfilerController;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 
 class ProfilerControllerPass implements CompilerPassInterface
 {
     /**
-     * Loads the definition for the ProfilerController when the profiler is present.
+     * Loads the definition for the ProfilerController when the profiler and twig are present.
      *
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('profiler')) {
+        if (!$container->hasDefinition('profiler') || !$container->hasDefinition('twig')) {
             return;
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../../Resources/config'));
-        $loader->load('profiler-controller.xml');
+        $container->register('contentful.delivery.profiler_controller', ProfilerController::class)
+            ->setArguments([
+                new Reference('profiler'),
+                new Reference('twig'),
+            ])
+            ->setPublic(\true)
+            ->addTag('controller.service_arguments')
+        ;
     }
 }

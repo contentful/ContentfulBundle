@@ -1,15 +1,17 @@
 <?php
 
 /**
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
-namespace Contentful\ContentfulBundle\Controller;
+declare(strict_types=1);
 
-use Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector;
+namespace Contentful\ContentfulBundle\Controller\Delivery;
+
+use Contentful\ContentfulBundle\DataCollector\Delivery\ClientDataCollector;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Twig\Environment;
@@ -24,13 +26,13 @@ class ProfilerController
     /**
      * @var Environment
      */
-    private $templating;
+    private $twig;
 
     /**
      * ProfilerController constructor.
      *
      * @param Profiler    $profiler
-     * @param Environment $templating
+     * @param Environment $twig
      */
     public function __construct(Profiler $profiler, Environment $twig)
     {
@@ -49,7 +51,7 @@ class ProfilerController
         $this->profiler->disable();
 
         $profile = $this->profiler->loadProfile($token);
-        /** @var ContentfulDataCollector $collector */
+        /** @var ClientDataCollector $collector */
         $collector = $profile->getCollector('contentful');
         $messages = $collector->getMessages();
 

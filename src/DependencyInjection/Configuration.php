@@ -1,15 +1,20 @@
 <?php
 
 /**
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
+declare(strict_types=1);
+
 namespace Contentful\ContentfulBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -18,123 +23,175 @@ class Configuration implements ConfigurationInterface
     /**
      * @var bool
      */
-    private $debug = false;
+    private $debug = \false;
+
+    /**
+     * @var NodeBuilder
+     */
+    private $builder;
 
     public function __construct($debug)
     {
         $this->debug = (bool) $debug;
+        $this->builder = new NodeBuilder();
     }
 
-    public function getConfigTreeBuilder()
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('contentful');
+        $root = $treeBuilder->root('contentful', 'array', $this->builder);
 
-        $this->addDeliverySection($rootNode);
+        $root
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->arrayNode('delivery')
+            ->requiresAtLeastOneElement()
+            ->useAttributeAsKey('name')
+            ->arrayPrototype()
+            ->children()
+            ->append($this->createDefaultNode())
+            ->append($this->createTokenNode())
+            ->append($this->createSpaceNode())
+            ->append($this->createEnvironmentNode())
+            ->append($this->createApiNode())
+            ->append($this->createOptionsNode())
+        ;
 
         return $treeBuilder;
     }
 
-    private function addDeliverySection(ArrayNodeDefinition $node)
+    private function createDefaultNode(): NodeDefinition
     {
-        $node
+        return $this->builder
+            ->booleanNode('default')
+            ->info('Which client to configure as default for autowiring')
+            ->defaultFalse()
+        ;
+    }
+
+    private function createTokenNode(): NodeDefinition
+    {
+        return $this->builder
+            ->scalarNode('token')
+            ->info('The Contentful access token for the given space')
+            ->isRequired()
+            ->cannotBeEmpty()
+        ;
+    }
+
+    private function createSpaceNode(): NodeDefinition
+    {
+        return $this->builder
+            ->scalarNode('space')
+            ->info('The space ID')
+            ->isRequired()
+            ->cannotBeEmpty()
+        ;
+    }
+
+    private function createEnvironmentNode(): NodeDefinition
+    {
+        return $this->builder
+            ->scalarNode('environment')
+            ->info('The environment ID')
+            ->defaultValue('master')
+            ->cannotBeEmpty()
+        ;
+    }
+
+    private function createApiNode(): NodeDefinition
+    {
+        return (new NodeBuilder())
+            ->enumNode('api')
+            ->info('The name of the API to use, either "delivery" (default value) or "preview"')
+            ->defaultValue('delivery')
+            ->cannotBeEmpty()
+            ->values(['delivery', 'preview'])
+        ;
+    }
+
+    private function createOptionsNode(): NodeDefinition
+    {
+        return $this->builder
+            ->arrayNode('options')
+            ->addDefaultsIfNotSet()
             ->children()
-            ->arrayNode('delivery')
-                ->beforeNormalization()
-                    ->ifTrue(function ($value) {
-                        return \is_array($value)
-                            && !\array_key_exists('clients', $value)
-                            && !\array_key_exists('client', $value);
-                    })
-                    ->then(function ($value) {
-                        // Key that should not be rewritten to the client config
-                        $excludedKeys = ['default_client' => true];
-                        $connection = [];
-
-                        foreach (\array_keys($value) as $key) {
-                            if (isset($excludedKeys[$key])) {
-                                continue;
-                            }
-
-                            $connection[$key] = $value[$key];
-                            unset($value[$key]);
-                        }
-
-                        $value['default_client'] = $value['default_client'] ?? 'default';
-                        $value['clients'] = [
-                            $value['default_client'] => $connection,
-                        ];
-
-                        return $value;
-                    })
-                ->end()
-                ->children()
-                    ->scalarNode('default_client')->end()
-                ->end()
-                ->fixXmlConfig('client')
-                ->append($this->getDeliveryConnectionsNode())
+            ->append($this->createLocaleNode())
+            ->append($this->createHostNode())
+            ->append($this->createLoggerNode())
+            ->append($this->createClientNode())
+            ->append($this->createCacheNode())
             ->end()
         ;
     }
 
-    private function getDeliveryConnectionsNode()
+    private function createLocaleNode(): NodeDefinition
     {
-        $treeBuilder = new TreeBuilder();
-        $node = $treeBuilder->root('clients');
-
-        /** @var ArrayNodeDefinition $connectionNode */
-        $connectionNode = $node
-            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')
-            ->prototype('array')
+        return $this->builder
+            ->scalarNode('locale')
+            ->info('If set, it will be used as the locale on all API calls')
+            ->defaultNull()
+            ->cannotBeEmpty()
         ;
+    }
 
-        $connectionNode
-            ->children()
-                ->scalarNode('space')
-                    ->isRequired()
-                    ->cannotBeEmpty()
-                ->end()
-                ->scalarNode('token')
-                    ->isRequired()
-                    ->cannotBeEmpty()
-                ->end()
-                ->scalarNode('environment')
-                    ->defaultValue('master')
-                    ->cannotBeEmpty()
-                ->end()
-                ->booleanNode('preview')
-                    ->defaultFalse()
-                ->end()
-                ->scalarNode('default_locale')
-                    ->defaultNull()
-                ->end()
-                ->scalarNode('base_uri')
-                    ->cannotBeEmpty()
-                ->end()
-                ->scalarNode('http_client')
-                    ->info('Override the default HTTP client with a custom Guzzle instance. Service ID as string.')
-                    ->cannotBeEmpty()
-                ->end()
-                ->scalarNode('cache')
-                    ->info('The cache to use. If set to true, the "cache.system" service will be used, otherwise specify the service ID of a custom PSR-6 compatible service')
-                    ->defaultFalse()
-                    ->validate()
-                        ->ifTrue(function ($value) {
-                            return true === $value;
-                        })
-                        ->then(function () {
-                            return 'cache.app';
-                        })
-                    ->end()
-                ->end()
-                ->booleanNode('cache_auto_warmup')
-                    ->info('If set to true, the system cache will be populated through natural use.')
-                    ->defaultFalse()
-                ->end()
+    private function createHostNode(): NodeDefinition
+    {
+        return $this->builder
+            ->scalarNode('host')
+            ->info('A URL of a host to use instead of cdn.contentful.com (useful with proxies)')
+            ->defaultNull()
+            ->cannotBeEmpty()
+            ->validate()
+            ->ifTrue(function (string $url): bool {
+                return \false === \filter_var($url, \FILTER_VALIDATE_URL);
+            })
+            ->thenInvalid('Parameter "host" in client configuration must be a valid URL.')
             ->end()
         ;
+    }
 
-        return $node;
+    private function createLoggerNode(): NodeDefinition
+    {
+        return $this->builder
+            ->scalarNode('logger')
+            ->info('A PSR-3 logger implementation, will default to the system logger')
+            ->defaultValue(LoggerInterface::class)
+        ;
+    }
+
+    private function createClientNode(): NodeDefinition
+    {
+        return $this->builder
+            ->scalarNode('client')
+            ->info('A Guzzle client instance')
+            ->defaultNull()
+            ->cannotBeEmpty()
+        ;
+    }
+
+    private function createCacheNode(): NodeDefinition
+    {
+        return $this->builder
+            ->arrayNode('cache')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('pool')
+            ->info('A PSR-6 cache item pool implementation, will default to the system cache')
+            ->defaultValue(CacheItemPoolInterface::class)
+            ->end()
+            ->booleanNode('runtime')
+            ->info('If true, content type and locale data will be cached during runtime and not on warmup')
+            ->defaultFalse()
+            ->end()
+            ->booleanNode('content')
+            ->info('If true, entry and asset data will be cached during runtime')
+            ->defaultFalse()
+            ->end()
+            ->end()
+        ;
     }
 }

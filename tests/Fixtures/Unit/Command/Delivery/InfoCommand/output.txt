@@ -1,0 +1,11 @@
+
+Contentful clients
+==================
+
+ --------- ------------------------------------ ---------- -------------- ------------- ------------- 
+  Name      Service                              API        Space          Environment   Cache        
+ --------- ------------------------------------ ---------- -------------- ------------- ------------- 
+  default   contentful.delivery.default_client   DELIVERY   cfexampleapi   master        app.cache    
+  preview   contentful.delivery.default_client   DELIVERY   cfexampleapi   master        Not enabled  
+ --------- ------------------------------------ ---------- -------------- ------------- ------------- 
+

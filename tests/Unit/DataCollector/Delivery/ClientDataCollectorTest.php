@@ -1,34 +1,36 @@
 <?php
 
 /**
- * This file is part of the ContentfulBundle package.
+ * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2016-2018 Contentful GmbH
+ * @copyright 2015-2018 Contentful GmbH
  * @license   MIT
  */
 
-namespace Contentful\Tests\ContentfulBundle\DataCollector;
+declare(strict_types=1);
 
-use Contentful\ContentfulBundle\DataCollector\ContentfulDataCollector;
+namespace Contentful\Tests\ContentfulBundle\Unit\DataCollector\Delivery;
+
+use Contentful\ContentfulBundle\DataCollector\Delivery\ClientDataCollector;
 use Contentful\Delivery\Client;
-use PHPUnit\Framework\TestCase;
+use Contentful\Tests\ContentfulBundle\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ContentfulDataCollectorTest extends TestCase
+class ClientDataCollectorTest extends TestCase
 {
-    public function testGetClients()
+    public function testGetData()
     {
         $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
         $configurations = [
-            ['service' => 'default.client', 'cache' => false],
+            ['service' => 'contentful.delivery.default_client', 'cache' => \false],
         ];
 
         $client->getSpace();
         $client->getEnvironment();
         $client->getContentTypes();
 
-        $dataCollector = new ContentfulDataCollector([$client], $configurations);
+        $dataCollector = new ClientDataCollector([$client], $configurations);
         $dataCollector->collect(new Request(), new Response());
 
         $this->assertSame('contentful', $dataCollector->getName());
@@ -38,8 +40,8 @@ class ContentfulDataCollectorTest extends TestCase
                 'api' => 'DELIVERY',
                 'space' => 'cfexampleapi',
                 'environment' => 'master',
-                'service' => 'default.client',
-                'cache' => false,
+                'service' => 'contentful.delivery.default_client',
+                'cache' => \false,
             ],
         ];
         $this->assertSame($expected, $dataCollector->getClients());
