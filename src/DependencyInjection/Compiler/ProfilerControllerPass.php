@@ -20,8 +20,6 @@ class ProfilerControllerPass implements CompilerPassInterface
 {
     /**
      * Loads the definition for the ProfilerController when the profiler and twig are present.
-     *
-     * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {

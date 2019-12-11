@@ -19,8 +19,6 @@ class TestCase extends BaseTestCase
 {
     /**
      * @param string $environment
-     *
-     * @return ContainerBuilder
      */
     protected function getContainer($environment = 'test'): ContainerBuilder
     {

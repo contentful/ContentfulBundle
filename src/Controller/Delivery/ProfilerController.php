@@ -30,9 +30,6 @@ class ProfilerController
 
     /**
      * ProfilerController constructor.
-     *
-     * @param Profiler    $profiler
-     * @param Environment $twig
      */
     public function __construct(Profiler $profiler, Environment $twig)
     {
@@ -40,12 +37,6 @@ class ProfilerController
         $this->twig = $twig;
     }
 
-    /**
-     * @param string $token
-     * @param int    $requestIndex
-     *
-     * @return Response
-     */
     public function detailsAction(string $token, int $requestIndex): Response
     {
         $this->profiler->disable();
