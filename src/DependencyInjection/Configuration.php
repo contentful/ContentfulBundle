@@ -41,8 +41,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('contentful', 'array', $this->builder);
+        $treeBuilder = new TreeBuilder('contentful', 'array', $this->builder);
+        $root = $treeBuilder->getRootNode();
 
         $root
             ->addDefaultsIfNotSet()
