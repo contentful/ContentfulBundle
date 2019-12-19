@@ -25,9 +25,6 @@ class CacheClearer implements CacheClearerInterface
 
     /**
      * DeliveryCacheClearer constructor.
-     *
-     * @param Client                 $client
-     * @param CacheItemPoolInterface $cacheItemPool
      */
     public function __construct(Client $client, CacheItemPoolInterface $cacheItemPool)
     {

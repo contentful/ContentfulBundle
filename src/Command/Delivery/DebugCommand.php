@@ -70,10 +70,7 @@ class DebugCommand extends Command
         }
 
         if (!isset($this->clients[$name])) {
-            throw new InvalidArgumentException(\sprintf(
-                'Could not find the requested client "%s", use "contentful:delivery:info" to check the configured clients.',
-                $name
-            ));
+            throw new InvalidArgumentException(\sprintf('Could not find the requested client "%s", use "contentful:delivery:info" to check the configured clients.', $name));
         }
 
         $client = $this->clients[$name];
@@ -95,11 +92,7 @@ class DebugCommand extends Command
                 $entries[$contentType->getId()] = $client->getEntries($query)->getTotal();
             }
         } catch (\Exception $exception) {
-            throw new RuntimeException(
-                'Requested service was found, but data could not be loaded. Try checking client credentials.',
-                0,
-                $exception
-            );
+            throw new RuntimeException('Requested service was found, but data could not be loaded. Try checking client credentials.', 0, $exception);
         }
 
         $io->title('Debug client');

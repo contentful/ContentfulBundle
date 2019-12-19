@@ -35,11 +35,6 @@ class CacheWarmer implements CacheWarmerInterface
 
     /**
      * DeliveryCacheWarmer constructor.
-     *
-     * @param Client                 $client
-     * @param CacheItemPoolInterface $cacheItemPool
-     * @param bool                   $autoWarmup
-     * @param bool                   $cacheContent
      */
     public function __construct(Client $client, CacheItemPoolInterface $cacheItemPool, bool $autoWarmup, bool $cacheContent)
     {

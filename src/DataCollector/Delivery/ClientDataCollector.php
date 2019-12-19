@@ -59,9 +59,6 @@ class ClientDataCollector extends DataCollector
         $this->data['messages'] = $messages;
     }
 
-    /**
-     * @return array
-     */
     public function getClients(): array
     {
         return $this->data['clients'];
@@ -75,17 +72,11 @@ class ClientDataCollector extends DataCollector
         return $this->data['messages'];
     }
 
-    /**
-     * @return int
-     */
     public function getRequestCount(): int
     {
         return \count($this->data['messages']);
     }
 
-    /**
-     * @return float
-     */
     public function getTotalDuration(): float
     {
         return \array_reduce($this->data['messages'], function (float $carry, Message $message) {
@@ -93,9 +84,6 @@ class ClientDataCollector extends DataCollector
         }, 0.0);
     }
 
-    /**
-     * @return int
-     */
     public function getErrorCount(): int
     {
         return \array_reduce($this->data['messages'], function (int $carry, Message $message) {
@@ -103,9 +91,6 @@ class ClientDataCollector extends DataCollector
         }, 0);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'contentful';

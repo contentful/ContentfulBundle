@@ -41,8 +41,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('contentful', 'array', $this->builder);
+        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
+            $treeBuilder = new TreeBuilder('contentful', 'array', $this->builder);
+            $root = $treeBuilder->getRootNode();
+        } else {
+            $treeBuilder = new TreeBuilder();
+            $root = $treeBuilder->root('contentful', 'array', $this->builder);
+        }
 
         $root
             ->addDefaultsIfNotSet()
