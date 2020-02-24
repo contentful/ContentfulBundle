@@ -11,7 +11,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.0",
-        "contentful/contentful": "^4.0",
+        "contentful/contentful": "^5.0",
         "symfony/framework-bundle": "^3.4|^4.0"
     },
     "require-dev": {
