@@ -46,7 +46,7 @@ class CacheWarmer implements CacheWarmerInterface
     /**
      * {@inheritdoc}
      */
-    public function warmUp($cacheDir)
+    public function warmUp(string $cacheDir)
     {
         $this->warmer->warmUp($this->cacheContent);
     }

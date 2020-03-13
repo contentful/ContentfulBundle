@@ -14,6 +14,8 @@ namespace Contentful\Tests\ContentfulBundle\Unit\Command\Delivery;
 use Contentful\ContentfulBundle\Command\Delivery\DebugCommand;
 use Contentful\Delivery\Client;
 use Contentful\Tests\ContentfulBundle\TestCase;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -47,12 +49,11 @@ class DebugCommandTest extends TestCase
         $this->assertSame($this->getFixtureContent('output.txt'), $output->fetch());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Console\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Could not find the requested client "invalid", use "contentful:delivery:info" to check the configured clients.
-     */
     public function testInvalidClient()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not find the requested client "invalid", use "contentful:delivery:info" to check the configured clients.');
+
         $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
         $configurations = [
             'main' => ['service' => 'default.client'],
@@ -67,12 +68,11 @@ class DebugCommandTest extends TestCase
         $command->run($input, $output);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Console\Exception\RuntimeException
-     * @expectedExceptionMessage Requested service was found, but data could not be loaded. Try checking client credentials.
-     */
     public function testDataCannotBeFetched()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Requested service was found, but data could not be loaded. Try checking client credentials.');
+
         $client = new Client('invalid', 'cfexampleapi', 'master');
         $configurations = [
             'main' => ['service' => 'default.client'],

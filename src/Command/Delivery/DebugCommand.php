@@ -138,5 +138,7 @@ class DebugCommand extends Command
             $data
         );
         $io->comment('https://app.contentful.com/spaces/'.$space->getId().'/environments/'.$environment->getId().'/content_types');
+
+        return 0;
     }
 }
