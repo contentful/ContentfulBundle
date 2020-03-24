@@ -2,7 +2,7 @@
 
 [![Packagist](https://img.shields.io/packagist/v/contentful/contentful-bundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/contentful/contentful-bundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
-[![Travis](https://img.shields.io/travis/contentful/ContentfulBundle.svg?style=for-the-badge)](https://travis-ci.org/contentful/ContentfulBundle)
+[![CircleCI](https://img.shields.io/circleci/project/github/contentful/ContentfulBundle.svg?style=for-the-badge)](https://circleci.com/gh/contentful/ContentfulBundle)
 [![Packagist](https://img.shields.io/github/license/contentful/ContentfulBundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
 
 > Symfony Bundle for the Contentful Delivery SDK. This bundle requires PHP 7.0 or higher, and Symfony 3.4 or higher. It also requires Twig to be installed.
