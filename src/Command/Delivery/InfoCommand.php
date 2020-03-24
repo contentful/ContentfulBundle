@@ -62,5 +62,7 @@ class InfoCommand extends Command
             ['Name', 'Service', 'API', 'Space', 'Environment', 'Cache'],
             $data
         );
+
+        return 0;
     }
 }
