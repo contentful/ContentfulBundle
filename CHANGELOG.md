@@ -3,11 +3,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/6.0.1...HEAD)
+## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/6.0.2...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+## [6.0.2](https://github.com/contentful/ContentfulBundle/tree/6.0.2) (2020-04-28)
+
+> No meaningful changes since last release.
 
 ## [6.0.1](https://github.com/contentful/ContentfulBundle/tree/6.0.1) (2020-04-28)
 
