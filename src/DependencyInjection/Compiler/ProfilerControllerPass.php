@@ -27,7 +27,7 @@ class ProfilerControllerPass implements CompilerPassInterface
             return;
         }
 
-        $container->register('contentful.delivery.profiler_controller', ProfilerController::class)
+        $container->register('contentful.profiler_controller', ProfilerController::class)
             ->setArguments([
                 new Reference('profiler'),
                 new Reference('twig'),
