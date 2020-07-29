@@ -25,7 +25,7 @@ class ProfilerControllerPassTest extends TestCase
         $container->addCompilerPass($compilerPass);
         $compilerPass->process($container);
 
-        $this->assertFalse($container->hasDefinition('contentful.delivery.profiler_controller'));
+        $this->assertFalse($container->hasDefinition('contentful.profiler_controller'));
     }
 
     public function testMissingProfiler()
@@ -37,7 +37,7 @@ class ProfilerControllerPassTest extends TestCase
         $container->addCompilerPass($compilerPass);
         $compilerPass->process($container);
 
-        $this->assertFalse($container->hasDefinition('contentful.delivery.profiler_controller'));
+        $this->assertFalse($container->hasDefinition('contentful.profiler_controller'));
     }
 
     public function testMissingTwig()
@@ -49,7 +49,7 @@ class ProfilerControllerPassTest extends TestCase
         $container->addCompilerPass($compilerPass);
         $compilerPass->process($container);
 
-        $this->assertFalse($container->hasDefinition('contentful.delivery.profiler_controller'));
+        $this->assertFalse($container->hasDefinition('contentful.profiler_controller'));
     }
 
     public function testProfilerAndTwigPresent()
@@ -62,6 +62,6 @@ class ProfilerControllerPassTest extends TestCase
         $container->addCompilerPass($compilerPass);
         $compilerPass->process($container);
 
-        $this->assertTrue($container->hasDefinition('contentful.delivery.profiler_controller'));
+        $this->assertTrue($container->hasDefinition('contentful.profiler_controller'));
     }
 }
