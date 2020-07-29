@@ -105,7 +105,7 @@ class ContentfulExtension extends Extension
             ->addArgument(new TaggedIteratorArgument('contentful.delivery.client'))
             ->addArgument(new Parameter('contentful.delivery.clients.info'))
             ->addTag('data_collector', [
-                'id' => 'contentful.delivery',
+                'id' => 'contentful',
                 'template' => '@Contentful/Collector/contentful.html.twig',
                 'priority' => '250',
             ])
