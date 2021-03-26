@@ -52,7 +52,7 @@ class DebugCommand extends Command
         $this->setDescription('Shows information about data coming from a certain client');
         $this->addArgument(
             'client-name',
-            \count($this->clients) > 1 ? InputArgument::REQUIRED : InputArgument::OPTIONAL,
+            \is_array($this->clients) && \count($this->clients) > 1 ? InputArgument::REQUIRED : InputArgument::OPTIONAL,
             'The name of the client to use'
         );
     }
