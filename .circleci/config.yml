@@ -8,6 +8,7 @@ workflows:
       - test72
       - test73
       - test74
+      - test80
 
 jobs:
   lint:
@@ -41,6 +42,7 @@ jobs:
   test74:
     environment:
       CC_TEST_REPORTER_ID: 8ed4f2496c1856519655b88d0517237c64a7a4ca673b5c3f3bf42d63b8fc4237
+      XDEBUG_MODE: coverage
     docker:
       - image: circleci/php:7.4-cli
     steps:
@@ -58,3 +60,13 @@ jobs:
             ./cc-test-reporter before-build
             composer run test-quick-fail
             ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+
+  test80:
+    docker:
+      - image: circleci/php:8.0-cli
+    steps:
+      - checkout
+      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
+      - run: { name: "Test suite", command: "composer run test-quick-fail" }
+
+ 

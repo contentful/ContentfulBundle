@@ -10,7 +10,7 @@
     "type": "symfony-bundle",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "contentful/contentful": "^6.0",
         "symfony/framework-bundle": "^3.4|^4.0|^5.0"
     },
