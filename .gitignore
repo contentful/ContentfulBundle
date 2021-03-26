@@ -5,3 +5,4 @@ build/
 .php_cs.cache
 clover.xml
 /php-cs-fixer.phar
+/.phpunit.result.cache

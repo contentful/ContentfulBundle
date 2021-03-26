@@ -5,7 +5,7 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/contentful/ContentfulBundle.svg?style=for-the-badge)](https://circleci.com/gh/contentful/ContentfulBundle)
 [![Packagist](https://img.shields.io/github/license/contentful/ContentfulBundle.svg?style=for-the-badge)](https://packagist.org/packages/contentful/contentful-bundle)
 
-> Symfony Bundle for the Contentful Delivery SDK. This bundle requires PHP 7.0 or higher, and Symfony 3.4 or higher. It also requires Twig to be installed.
+> Symfony Bundle for the Contentful Delivery SDK. This bundle requires PHP 7.2 or higher or PHP 8.0 or higher, and Symfony 3.4 or higher. It also requires Twig to be installed.
 
 # Setup
 
