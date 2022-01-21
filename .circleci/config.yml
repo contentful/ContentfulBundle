@@ -52,7 +52,7 @@ jobs:
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
       - run: { name: "Test suite", command: "composer run test-quick-fail" }
 
-   test81:
+  test81:
     docker:
       - image: cimg/php:8.1
     steps:
