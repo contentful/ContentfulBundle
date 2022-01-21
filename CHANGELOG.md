@@ -3,11 +3,33 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/6.2.0...HEAD)
+## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/7.0.0...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+
+## [7.0.0](https://github.com/contentful/ContentfulBundle/tree/7.0.0) (2022-01-21)
+
+### Added
+
+* Support for Symfony 6
+
+### Fixed
+
+* Minor warning when trying to count optional field (see [#51](https://github.com/contentful/ContentfulBundle/issues/51))
+
+### Dropped
+
+* **Breaking change** Support for PHP 7.2 and 7.3 was dropped, since they are now end-of-life. You can continue to use version 6.2.0 or install it with `--ignore-platform-reqs`, but compatibility will no longer be checked explicitely. Version 6.2,0 will still be maintained in case of security issues for the forseeable future.
+* **Breaking change** Support for Symfony version 3 and version 5 was dropped, since they're now end-of-life, too. As with PHP, you can continue to use version 6.2.0.
+
+### Internal
+
+* Small CI changes
+
+
 
 ## [6.2.0](https://github.com/contentful/ContentfulBundle/tree/6.2.0) (2021-03-26)
 
