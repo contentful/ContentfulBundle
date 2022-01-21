@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @var bool
      */
-    private $debug = \false;
+    private $debug = false;
 
     /**
      * @var NodeBuilder
@@ -152,7 +152,7 @@ class Configuration implements ConfigurationInterface
             ->cannotBeEmpty()
             ->validate()
             ->ifTrue(function (string $url): bool {
-                return \false === \filter_var($url, \FILTER_VALIDATE_URL);
+                return false === \filter_var($url, \FILTER_VALIDATE_URL);
             })
             ->thenInvalid('Parameter "host" in client configuration must be a valid URL.')
             ->end()

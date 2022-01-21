@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -83,9 +83,9 @@ class ClientFactoryTest extends TestCase
                 'logger' => new Logger('test', [$handler]),
                 'client' => new HttpClient(),
                 'cache' => [
-                    'pool' => new ArrayCachePool(\null, $cacheItems),
-                    'runtime' => \true,
-                    'content' => \false,
+                    'pool' => new ArrayCachePool(null, $cacheItems),
+                    'runtime' => true,
+                    'content' => false,
                 ],
             ],
         ];

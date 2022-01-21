@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -23,7 +23,7 @@ class TestCase extends BaseTestCase
     protected function getContainer($environment = 'test'): ContainerBuilder
     {
         return new ContainerBuilder(new ParameterBag([
-            'kernel.debug' => \false,
+            'kernel.debug' => false,
             'kernel.bundles' => [],
             'kernel.cache_dir' => \sys_get_temp_dir(),
             'kernel.environment' => $environment,

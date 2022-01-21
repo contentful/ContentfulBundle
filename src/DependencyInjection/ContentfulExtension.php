@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -57,11 +57,11 @@ class ContentfulExtension extends Extension
     private function registerCache(ContainerBuilder $container): self
     {
         $container->register('contentful.delivery.cache_clearer', CacheClearer::class)
-            ->setAbstract(\true)
+            ->setAbstract(true)
         ;
 
         $container->register('contentful.delivery.cache_warmer', CacheWarmer::class)
-            ->setAbstract(\true)
+            ->setAbstract(true)
         ;
 
         return $this;
@@ -126,11 +126,11 @@ class ContentfulExtension extends Extension
         // it will automatically be the default one
         if (1 === \count($configs)) {
             $name = \array_keys($configs)[0];
-            $configs[$name]['default'] = \true;
+            $configs[$name]['default'] = true;
         }
 
         $defaults = \array_reduce($configs, function (int $carry, array $config) {
-            return $carry + (int) (\true === $config['default']);
+            return $carry + (int) (true === $config['default']);
         }, 0);
         if (1 !== $defaults) {
             throw new LogicException(\sprintf('Contentful client configuration requires exactly one client defined with "default: true" key, %d found.', $defaults));
@@ -144,16 +144,16 @@ class ContentfulExtension extends Extension
                 ->addArgument($options)
                 ->setFactory([ClientFactory::class, 'create'])
                 ->addTag('contentful.delivery.client')
-                ->setAutowired(\true)
+                ->setAutowired(true)
             ;
 
             $this->configureDeliveryCache($container, $name, $options['options']['cache']);
 
-            if (\true === $config['default']) {
+            if (true === $config['default']) {
                 $container->setAlias(ClientInterface::class, $serviceId);
                 $container->setAlias(Client::class, $serviceId);
                 $container->setAlias('contentful.delivery.client', $serviceId)
-                    ->setPublic(\true)
+                    ->setPublic(true)
                 ;
             }
 
@@ -175,19 +175,19 @@ class ContentfulExtension extends Extension
     private function configureDeliveryOptions(array $options): array
     {
         $logger = $options['options']['logger'];
-        if (\null !== $logger) {
-            $options['options']['logger'] = \true === $logger
+        if (null !== $logger) {
+            $options['options']['logger'] = true === $logger
                 ? new Reference(LoggerInterface::class)
                 : new Reference($options['options']['logger']);
         }
 
-        if (\null !== $options['options']['client']) {
+        if (null !== $options['options']['client']) {
             $options['options']['client'] = new Reference($options['options']['client']);
         }
 
         $pool = $options['options']['cache']['pool'];
-        if (\null !== $pool) {
-            $options['options']['cache']['pool'] = \true === $pool
+        if (null !== $pool) {
+            $options['options']['cache']['pool'] = true === $pool
                 ? new Reference(CacheItemPoolInterface::class)
                 : new Reference($pool);
         }
@@ -197,7 +197,7 @@ class ContentfulExtension extends Extension
 
     private function configureDeliveryCache(ContainerBuilder $container, string $name, array $cache)
     {
-        if (\null === $cache['pool']) {
+        if (null === $cache['pool']) {
             return;
         }
 

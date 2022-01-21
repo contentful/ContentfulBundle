@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -37,7 +37,7 @@ class ContentfulExtensionTest extends TestCase
 
         $container->registerExtension($extension);
 
-        $container->set(CacheItemPoolInterface::class, new ArrayCachePool(\null));
+        $container->set(CacheItemPoolInterface::class, new ArrayCachePool(null));
         $container->set(LoggerInterface::class, new Logger('test', [new TestHandler()]));
         $container->set('app.http_client', new HttpClient());
 
@@ -45,14 +45,14 @@ class ContentfulExtensionTest extends TestCase
             'contentful' => [
                 'delivery' => [
                     'main' => [
-                        'default' => \true,
+                        'default' => true,
                         'token' => 'b4c0n73n7fu1',
                         'space' => 'cfexampleapi',
                         'options' => [
-                            'logger' => \true,
+                            'logger' => true,
                             'client' => 'app.http_client',
                             'cache' => [
-                                'pool' => \true,
+                                'pool' => true,
                             ],
                         ],
                     ],
@@ -78,9 +78,9 @@ class ContentfulExtensionTest extends TestCase
                         'token' => 'aaa',
                         'space' => 'ccc',
                         'options' => [
-                            'logger' => \null,
+                            'logger' => null,
                             'cache' => [
-                                'pool' => \null,
+                                'pool' => null,
                             ],
                         ],
                     ],
@@ -177,12 +177,12 @@ class ContentfulExtensionTest extends TestCase
                 'contentful' => [
                     'delivery' => [
                         'main' => [
-                            'default' => \true,
+                            'default' => true,
                             'token' => 'aaa',
                             'space' => 'bbb',
                         ],
                         'preview' => [
-                            'default' => \true,
+                            'default' => true,
                             'token' => 'aaa',
                             'space' => 'bbb',
                         ],
@@ -207,22 +207,22 @@ class ContentfulExtensionTest extends TestCase
         $container->registerExtension($extension);
 
         $items = [];
-        $cache = new ArrayCachePool(\null, $items);
+        $cache = new ArrayCachePool(null, $items);
         $container->set(CacheItemPoolInterface::class, $cache);
 
         $extension->load([
             'contentful' => [
                 'delivery' => [
                     'main' => [
-                        'default' => \true,
+                        'default' => true,
                         'token' => 'b4c0n73n7fu1',
                         'space' => 'cfexampleapi',
                         'options' => [
-                            'logger' => \null,
+                            'logger' => null,
                             'cache' => [
-                                'pool' => \true,
-                                'runtime' => \true,
-                                'content' => \true,
+                                'pool' => true,
+                                'runtime' => true,
+                                'content' => true,
                             ],
                         ],
                     ],
@@ -286,22 +286,22 @@ class ContentfulExtensionTest extends TestCase
         $container->registerExtension($extension);
 
         $items = [];
-        $cache = new ArrayCachePool(\null, $items);
+        $cache = new ArrayCachePool(null, $items);
         $container->set(ArrayCachePool::class, $cache);
 
         $extension->load([
             'contentful' => [
                 'delivery' => [
                     'main' => [
-                        'default' => \true,
+                        'default' => true,
                         'token' => 'b4c0n73n7fu1',
                         'space' => 'cfexampleapi',
                         'options' => [
-                            'logger' => \null,
+                            'logger' => null,
                             'cache' => [
                                 'pool' => ArrayCachePool::class,
-                                'runtime' => \true,
-                                'content' => \true,
+                                'runtime' => true,
+                                'content' => true,
                             ],
                         ],
                     ],
@@ -375,9 +375,9 @@ class ContentfulExtensionTest extends TestCase
                         'token' => 'b4c0n73n7fu1',
                         'space' => 'cfexampleapi',
                         'options' => [
-                            'logger' => \true,
+                            'logger' => true,
                             'cache' => [
-                                'pool' => \null,
+                                'pool' => null,
                             ],
                         ],
                     ],
@@ -414,13 +414,13 @@ class ContentfulExtensionTest extends TestCase
             'contentful' => [
                 'delivery' => [
                     'main' => [
-                        'default' => \true,
+                        'default' => true,
                         'token' => 'b4c0n73n7fu1',
                         'space' => 'cfexampleapi',
                         'options' => [
                             'logger' => Logger::class,
                             'cache' => [
-                                'pool' => \null,
+                                'pool' => null,
                             ],
                         ],
                     ],
@@ -451,10 +451,10 @@ class ContentfulExtensionTest extends TestCase
 
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
-        $hasCalledHandler = \false;
+        $hasCalledHandler = false;
         $stack->push(function (callable $handler) use (&$hasCalledHandler) {
             return function (RequestInterface $request, array $options) use ($handler, &$hasCalledHandler) {
-                $hasCalledHandler = \true;
+                $hasCalledHandler = true;
 
                 return $handler($request, $options);
             };
@@ -465,14 +465,14 @@ class ContentfulExtensionTest extends TestCase
             'contentful' => [
                 'delivery' => [
                     'main' => [
-                        'default' => \true,
+                        'default' => true,
                         'token' => 'b4c0n73n7fu1',
                         'space' => 'cfexampleapi',
                         'options' => [
                             'client' => 'app.http_client',
-                            'logger' => \null,
+                            'logger' => null,
                             'cache' => [
-                                'pool' => \null,
+                                'pool' => null,
                             ],
                         ],
                     ],

@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -49,7 +49,7 @@ class ClientDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, $exception = \null)
+    public function collect(Request $request, Response $response, $exception = null)
     {
         $messages = [];
         foreach ($this->clients as $client) {

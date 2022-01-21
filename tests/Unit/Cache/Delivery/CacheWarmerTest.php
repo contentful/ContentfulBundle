@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -22,7 +22,7 @@ class CacheWarmerTest extends TestCase
     {
         $items = [];
         $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
-        $warmer = new CacheWarmer($client, new ArrayCachePool(\null, $items), \false, \false);
+        $warmer = new CacheWarmer($client, new ArrayCachePool(null, $items), false, false);
         $this->assertFalse($warmer->isOptional());
 
         $warmer->warmUp('');

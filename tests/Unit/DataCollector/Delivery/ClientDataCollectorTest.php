@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2021 Contentful GmbH
+ * @copyright 2015-2022 Contentful GmbH
  * @license   MIT
  */
 
@@ -23,7 +23,7 @@ class ClientDataCollectorTest extends TestCase
     {
         $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
         $configurations = [
-            ['service' => 'contentful.delivery.default_client', 'cache' => \false],
+            ['service' => 'contentful.delivery.default_client', 'cache' => false],
         ];
 
         $client->getSpace();
@@ -41,7 +41,7 @@ class ClientDataCollectorTest extends TestCase
                 'space' => 'cfexampleapi',
                 'environment' => 'master',
                 'service' => 'contentful.delivery.default_client',
-                'cache' => \false,
+                'cache' => false,
             ],
         ];
         $this->assertSame($expected, $dataCollector->getClients());
