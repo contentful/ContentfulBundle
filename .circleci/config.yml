@@ -5,10 +5,9 @@ workflows:
   lint_and_test:
     jobs:
       - lint
-      - test72
-      - test73
       - test74
       - test80
+      - test81
 
 jobs:
   lint:
@@ -22,22 +21,6 @@ jobs:
           command: |
             wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -q -O php-cs-fixer.phar
             composer run lint-syntax
-
-  test72:
-    docker:
-      - image: circleci/php:7.2-cli
-    steps:
-      - checkout
-      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer run test-quick-fail" }
-
-  test73:
-    docker:
-      - image: circleci/php:7.3-cli
-    steps:
-      - checkout
-      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer run test-quick-fail" }
 
   test74:
     environment:
@@ -69,4 +52,12 @@ jobs:
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
       - run: { name: "Test suite", command: "composer run test-quick-fail" }
 
- 
+   test81:
+    docker:
+      - image: cimg/php:8.1
+    steps:
+      - checkout
+      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
+      - run: { name: "Test suite", command: "composer run test-quick-fail" }
+
+
