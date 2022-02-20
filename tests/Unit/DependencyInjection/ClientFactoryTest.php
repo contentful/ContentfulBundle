@@ -18,14 +18,16 @@ use GuzzleHttp\Client as HttpClient;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class ClientFactoryTest extends TestCase
 {
     public function testCreateDelivery()
     {
-        $cacheItems = [];
         $handler = new TestHandler();
-        $config = $this->getConfig($cacheItems, $handler);
+        $cache = new ArrayAdapter();
+        $config = $this->getConfig($cache, $handler);
 
         $client = ClientFactory::create($config);
 
@@ -45,12 +47,12 @@ class ClientFactoryTest extends TestCase
         $this->assertRegExp('/GET https\:\/\/cdn\.contentful\.com\/spaces\/cfexampleapi\/environments\/master\/entries\/nyancat\?locale\=en\-US \(([0-9]{1,})\.([0-9]{3})s\)/', $logs[0]['message']);
         $this->assertSame('DEBUG', $logs[1]['level_name']);
 
-        $this->assertArrayHasKey('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__', $cacheItems);
-        $this->assertJson($cacheItems['contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__'][0]);
-        $this->assertArrayHasKey('contentful.DELIVERY.cfexampleapi.master.Environment.master.__ALL__', $cacheItems);
-        $this->assertJson($cacheItems['contentful.DELIVERY.cfexampleapi.master.Environment.master.__ALL__'][0]);
-        $this->assertArrayHasKey('contentful.DELIVERY.cfexampleapi.master.ContentType.cat.__ALL__', $cacheItems);
-        $this->assertJson($cacheItems['contentful.DELIVERY.cfexampleapi.master.ContentType.cat.__ALL__'][0]);
+        $this->assertTrue($cache->hasItem('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__'));
+        $this->assertJson($cache->getItem('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__')->get());
+        $this->assertTrue($cache->hasItem('contentful.DELIVERY.cfexampleapi.master.Environment.master.__ALL__'));
+        $this->assertJson($cache->getItem('contentful.DELIVERY.cfexampleapi.master.Environment.master.__ALL__')->get());
+        $this->assertTrue($cache->hasItem('contentful.DELIVERY.cfexampleapi.master.ContentType.cat.__ALL__'));
+        $this->assertJson($cache->getItem('contentful.DELIVERY.cfexampleapi.master.ContentType.cat.__ALL__')->get());
     }
 
     public function testCreatePreview()
@@ -70,7 +72,7 @@ class ClientFactoryTest extends TestCase
         $this->assertSame('master', $client->getEnvironmentId());
     }
 
-    private function getConfig(array &$cacheItems, HandlerInterface $handler): array
+    private function getConfig(CacheItemPoolInterface $cache, HandlerInterface $handler): array
     {
         return [
             'token' => 'b4c0n73n7fu1',
@@ -83,7 +85,7 @@ class ClientFactoryTest extends TestCase
                 'logger' => new Logger('test', [$handler]),
                 'client' => new HttpClient(),
                 'cache' => [
-                    'pool' => new ArrayCachePool(null, $cacheItems),
+                    'pool' => $cache,
                     'runtime' => true,
                     'content' => false,
                 ],
