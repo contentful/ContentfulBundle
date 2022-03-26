@@ -13,7 +13,7 @@
         "php": "^7.4|^8.0",
         "contentful/contentful": "^6.0",
         "psr/log": "^1.1|^2.0|^3.0",
-        "symfony/framework-bundle": "^4.0|^5.0|^6.0"
+        "symfony/framework-bundle": "^4.0|^5.4|^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
