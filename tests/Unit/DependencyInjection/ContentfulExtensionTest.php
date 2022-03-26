@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Contentful\Tests\ContentfulBundle\Unit\DependencyInjection;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Contentful\ContentfulBundle\DependencyInjection\ContentfulExtension;
 use Contentful\Delivery\Client;
 use Contentful\Delivery\Client\ClientInterface;
@@ -24,6 +23,7 @@ use Monolog\Logger;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\Reference;
@@ -37,7 +37,7 @@ class ContentfulExtensionTest extends TestCase
 
         $container->registerExtension($extension);
 
-        $container->set(CacheItemPoolInterface::class, new ArrayCachePool(null));
+        $container->set(CacheItemPoolInterface::class, new ArrayAdapter());
         $container->set(LoggerInterface::class, new Logger('test', [new TestHandler()]));
         $container->set('app.http_client', new HttpClient());
 
@@ -206,8 +206,7 @@ class ContentfulExtensionTest extends TestCase
 
         $container->registerExtension($extension);
 
-        $items = [];
-        $cache = new ArrayCachePool(null, $items);
+        $cache = new ArrayAdapter();
         $container->set(CacheItemPoolInterface::class, $cache);
 
         $extension->load([
@@ -236,8 +235,8 @@ class ContentfulExtensionTest extends TestCase
 
         $client->getSpace();
 
-        $this->assertArrayHasKey('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__', $items);
-        $this->assertJson($items['contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__'][0]);
+        $this->assertTrue($cache->hasItem('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__'));
+        $this->assertJson($cache->getItem('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__')->get());
 
         // Cache clearer
         $this->assertTrue($container->hasDefinition('contentful.delivery.main_client.cache_clearer'));
@@ -285,9 +284,8 @@ class ContentfulExtensionTest extends TestCase
 
         $container->registerExtension($extension);
 
-        $items = [];
-        $cache = new ArrayCachePool(null, $items);
-        $container->set(ArrayCachePool::class, $cache);
+        $cache = new ArrayAdapter();
+        $container->set(ArrayAdapter::class, $cache);
 
         $extension->load([
             'contentful' => [
@@ -299,7 +297,7 @@ class ContentfulExtensionTest extends TestCase
                         'options' => [
                             'logger' => null,
                             'cache' => [
-                                'pool' => ArrayCachePool::class,
+                                'pool' => ArrayAdapter::class,
                                 'runtime' => true,
                                 'content' => true,
                             ],
@@ -315,8 +313,8 @@ class ContentfulExtensionTest extends TestCase
 
         $client->getSpace();
 
-        $this->assertArrayHasKey('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__', $items);
-        $this->assertJson($items['contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__'][0]);
+        $this->assertTrue($cache->hasItem('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__'));
+        $this->assertJson($cache->getItem('contentful.DELIVERY.cfexampleapi.master.Space.cfexampleapi.__ALL__')->get());
 
         // Cache clearer
         $this->assertTrue($container->hasDefinition('contentful.delivery.main_client.cache_clearer'));
@@ -331,7 +329,7 @@ class ContentfulExtensionTest extends TestCase
         /** @var Reference $cachePool */
         $cachePool = $arguments[1];
         $this->assertInstanceOf(Reference::class, $cachePool);
-        $this->assertSame(ArrayCachePool::class, (string) $cachePool);
+        $this->assertSame(ArrayAdapter::class, (string) $cachePool);
 
         // Cache warmer
         $this->assertTrue($container->hasDefinition('contentful.delivery.main_client.cache_warmer'));
@@ -346,7 +344,7 @@ class ContentfulExtensionTest extends TestCase
         /** @var Reference $cachePool */
         $cachePool = $arguments[1];
         $this->assertInstanceOf(Reference::class, $cachePool);
-        $this->assertSame(ArrayCachePool::class, (string) $cachePool);
+        $this->assertSame(ArrayAdapter::class, (string) $cachePool);
         /** @var bool $runtime */
         $runtime = $arguments[2];
         $this->assertIsBool($runtime);
