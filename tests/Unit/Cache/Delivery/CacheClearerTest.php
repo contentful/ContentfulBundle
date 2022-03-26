@@ -11,14 +11,11 @@ declare(strict_types=1);
 
 namespace Contentful\Tests\ContentfulBundle\Unit\Cache\Delivery;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Contentful\ContentfulBundle\Cache\Delivery\CacheClearer;
 use Contentful\Delivery\Client;
 use Contentful\Tests\ContentfulBundle\TestCase;
-use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\Cache\CacheItem;
 
 class CacheClearerTest extends TestCase
 {
