@@ -48,7 +48,9 @@ class CacheWarmer implements CacheWarmerInterface
      */
     public function warmUp($cacheDir): array
     {
-        return $this->warmer->warmUp($this->cacheContent);
+        $this->warmer->warmUp($this->cacheContent);
+        // we don't have any directories to pre-load, so we can simply return an empty array.
+        return [];
     }
 
     /**
