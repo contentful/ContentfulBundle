@@ -3,15 +3,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/7.1.0...HEAD)
+## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/7.1.1...HEAD)
+
+<!-- PENDING-CHANGES -->
+> No meaningful changes since last release.
+<!-- /PENDING-CHANGES -->
+
+
+## [7.1.1](https://github.com/contentful/ContentfulBundle/tree/7.1.1) (2022-09-16)
 
 ### Fixed
 
 * Deprecations for newer Symfony versions
 
-<!-- PENDING-CHANGES -->
-<!-- > No meaningful changes since last release. -->
-<!-- /PENDING-CHANGES -->
 
 ## [7.1.0](https://github.com/contentful/ContentfulBundle/tree/7.1.0) (2022-03-26)
 
