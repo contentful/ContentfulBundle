@@ -26,8 +26,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DebugCommand extends Command
 {
-    protected static $defaultName = 'contentful:delivery:debug';
-
     /**
      * @var Client[]
      */
@@ -41,7 +39,7 @@ class DebugCommand extends Command
      */
     public function __construct($clients, $configurations = [])
     {
-        parent::__construct(self::$defaultName);
+        parent::__construct();
 
         $availableNames = \array_keys($configurations);
         foreach ($clients as $index => $client) {
@@ -49,6 +47,7 @@ class DebugCommand extends Command
             $this->clients[$name] = $client;
         }
 
+        $this->setName('contentful:delivery:debug');
         $this->setDescription('Shows information about data coming from a certain client');
         $this->addArgument(
             'client-name',
