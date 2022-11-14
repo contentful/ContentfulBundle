@@ -18,8 +18,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class InfoCommand extends Command
 {
-    protected static $defaultName = 'contentful:delivery:info';
-
     /**
      * @var array
      */
@@ -27,8 +25,9 @@ class InfoCommand extends Command
 
     public function __construct(array $info)
     {
-        parent::__construct(self::$defaultName);
+        parent::__construct();
 
+        $this->setName('contentful:delivery:info');
         $this->setDescription('Shows information about the configured Contentful delivery clients');
         $this->info = $info;
     }
