@@ -1,55 +1,59 @@
-version: 2
+version: 2.1
 
 workflows:
   version: 2
-  lint_and_test:
+
+  main:
     jobs:
-      - lint
+      - lintSyntax
+      - lintStaticAnalysis
       - test74
       - test80
       - test81
-
+      - test82
 jobs:
-  lint:
+  lintStaticAnalysis:
     docker:
-      - image: circleci/php:7.4-cli
+      - image: cimg/php:8.1
     steps:
       - checkout
-      - run: { name: "Install dependencies", command: sudo composer self-update && composer install -n --prefer-dist }
       - run:
-          name: Syntax tests
-          command: |
-            composer run lint-syntax
+          name: "Install dependencies"
+          command: sudo composer self-update && composer install -n --prefer-dist
+      - run:
+          name: Static analysis
+          command: composer run lint-static-analysis
+
+  lintSyntax:
+    docker:
+      - image: cimg/php:8.1
+    steps:
+      - checkout
+      - run:
+          name: "Install dependencies"
+          command: sudo composer self-update && composer install -n --prefer-dist
+      - run:
+          name: Install php-cs-fixer
+          command: mkdir -p tools/php-cs-fixer && composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+      - run:
+          name: Run syntax test
+          command: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation -v
 
   test74:
-    environment:
-      CC_TEST_REPORTER_ID: 8ed4f2496c1856519655b88d0517237c64a7a4ca673b5c3f3bf42d63b8fc4237
-      XDEBUG_MODE: coverage
     docker:
-      - image: circleci/php:7.4-cli
+      - image: cimg/php:7.4
     steps:
       - checkout
-      - run:
-          name: Set up Code Climate test-reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run:
-          name: Test suite
-          command: |
-            sudo docker-php-ext-enable xdebug
-            ./cc-test-reporter before-build
-            composer run test-quick-fail
-            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+      - run: { name: "Test suite", command: "composer test-quick-fail" }
 
   test80:
     docker:
-      - image: circleci/php:8.0-cli
+      - image: cimg/php:8.0
     steps:
       - checkout
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer run test-quick-fail" }
+      - run: { name: "Test suite", command: "composer test-quick-fail" }
 
   test81:
     docker:
@@ -57,6 +61,13 @@ jobs:
     steps:
       - checkout
       - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
-      - run: { name: "Test suite", command: "composer run test-quick-fail" }
+      - run: { name: "Test suite", command: "composer test-quick-fail" }
 
+  test82:
+    docker:
+      - image: cimg/php:8.2
+    steps:
+      - checkout
+      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
+      - run: { name: "Test suite", command: "composer test-quick-fail" }
 

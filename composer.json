@@ -13,11 +13,12 @@
         "php": "^7.4|^8.0",
         "contentful/contentful": "^6.0|^7.0",
         "psr/log": "^1.1|^2.0|^3.0",
-        "symfony/framework-bundle": "^4.0|^5.4|^6.0"
+        "symfony/framework-bundle": "^5.4|^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
         "monolog/monolog": "^2.0",
+        "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^8.5",
         "symfony/cache": "^5.0|^6.0",
         "twig/twig": "^3.0"
@@ -38,14 +39,8 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-quick-fail": "php vendor/bin/phpunit --stop-on-error --stop-on-failure -v",
-        "lint-syntax": "vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation -v",
-        "lint-static-analysis": "$([ -f phpstan.phar ] && echo \"php phpstan.phar\" || echo \"phpstan\") analyse --level=max src/",
+        "lint-static-analysis": "php vendor/bin/phpstan analyse src --level=5",
         "release": "php vendor/contentful/core/scripts/release.php"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "7.0.x-dev"
-        }
     },
     "config": {
         "allow-plugins": {
