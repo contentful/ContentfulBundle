@@ -17,8 +17,6 @@ composer require contentful/contentful-bundle
 
 ## Add ContentfulBundle to your application
 
-### Symfony 4
-
 ``` php
 // config/bundles.php
 return [
@@ -26,20 +24,6 @@ return [
     Contentful\ContentfulBundle\ContentfulBundle::class => ['dev' => true],
     // ...
 ];
-```
-
-### Symfony 3
-
-``` php
-// app/AppKernel.php
-public function registerBundles()
-{
-    return array(
-        // ...
-        new Contentful\ContentfulBundle\ContentfulBundle(),
-        // ...
-    );
-}
 ```
 
 ## Configuration example
@@ -79,4 +63,4 @@ contentful:
 
 ## License
 
-Copyright (c) 2015-2017 Contentful GmbH. Code released under the MIT license. See [LICENSE](LICENSE) for further details.
+Copyright (c) 2015-2023 Contentful GmbH. Code released under the MIT license. See [LICENSE](LICENSE) for further details.

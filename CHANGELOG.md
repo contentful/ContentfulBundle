@@ -3,11 +3,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/7.1.1...HEAD)
+## [Unreleased](https://github.com/contentful/ContentfulBundle/compare/8.0.0...HEAD)
 
 <!-- PENDING-CHANGES -->
 > No meaningful changes since last release.
 <!-- /PENDING-CHANGES -->
+
+## [8.0.0](https://github.com/contentful/ContentfulBundle/tree/8.0.0) (2023-01-21)
+
+### Changes
+
+* Dropped support for Symfony 4
+* Allowed installation of Contentful v7 - thanks @svenluijten !
+* Fixed deprecated attribute in Symphony 6.1 - thanks @asuri0n !
+* Updated CI checks
 
 
 ## [7.1.1](https://github.com/contentful/ContentfulBundle/tree/7.1.1) (2022-09-16)
