@@ -13,6 +13,7 @@ namespace Contentful\ContentfulBundle\DependencyInjection;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -41,13 +42,11 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder('contentful', 'array', $this->builder);
-            $root = $treeBuilder->getRootNode();
-        } else {
-            $treeBuilder = new TreeBuilder();
-            $root = $treeBuilder->root('contentful', 'array', $this->builder);
-        }
+        $treeBuilder = new TreeBuilder('contentful', 'array', $this->builder);
+        /**
+         * @var ArrayNodeDefinition
+         */
+        $root = $treeBuilder->getRootNode();
 
         $root
             ->addDefaultsIfNotSet()
@@ -180,7 +179,9 @@ class Configuration implements ConfigurationInterface
 
     private function createCacheNode(): NodeDefinition
     {
-        return $this->builder
+        // PHPStan does not know this is guaranteed to return a NodeBuilder on line 192.
+        // Therefore, we need to ignore this.
+        return $this->builder /** @phpstan-ignore-line */
             ->arrayNode('cache')
             ->addDefaultsIfNotSet()
             ->children()
@@ -198,5 +199,13 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->end()
         ;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 }

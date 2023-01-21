@@ -124,7 +124,7 @@ class DebugCommand extends Command
             \count($contentTypes)
         ));
         $data = \array_map(function (ContentType $contentType) use ($entries) {
-            return [
+             return [
                 $contentType->getId(),
                 $contentType->getName(),
                 \count($contentType->getFields()),
