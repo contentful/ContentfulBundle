@@ -18,6 +18,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class InfoCommand extends Command
 {
+    protected static $defaultName = 'contentful:delivery:info';
+
     /**
      * @var array
      */
