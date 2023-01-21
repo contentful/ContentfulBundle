@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2023 Contentful GmbH
  * @license   MIT
  */
 
@@ -51,8 +51,6 @@ class ContentfulExtension extends Extension
      * Registers two base cache handlers, one for warming up and one for clearing.
      * They are defined as abstract as a "concrete" implementation will be defined
      * for every configured client.
-     *
-     * @return ContentfulExtension
      */
     private function registerCache(ContainerBuilder $container): self
     {
@@ -70,8 +68,6 @@ class ContentfulExtension extends Extension
     /**
      * Registers the CLI command which is in charge of extracting the configuration info,
      * and displaying it for debugging purposes.
-     *
-     * @return ContentfulExtension
      */
     private function registerCommand(ContainerBuilder $container): self
     {
@@ -96,8 +92,6 @@ class ContentfulExtension extends Extension
     /**
      * Registers the data collector, which will display info about the configured clients
      * and the queries being made to the API.
-     *
-     * @return ContentfulExtension
      */
     private function registerDataCollector(ContainerBuilder $container): self
     {

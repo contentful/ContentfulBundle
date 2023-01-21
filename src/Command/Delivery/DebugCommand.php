@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2023 Contentful GmbH
  * @license   MIT
  */
 
@@ -124,12 +124,12 @@ class DebugCommand extends Command
             \count($contentTypes)
         ));
         $data = \array_map(function (ContentType $contentType) use ($entries) {
-             return [
-                $contentType->getId(),
-                $contentType->getName(),
-                \count($contentType->getFields()),
-                $entries[$contentType->getId()],
-                $contentType->getDescription(),
+            return [
+               $contentType->getId(),
+               $contentType->getName(),
+               \count($contentType->getFields()),
+               $entries[$contentType->getId()],
+               $contentType->getDescription(),
             ];
         }, $contentTypes->getItems());
         $io->table(

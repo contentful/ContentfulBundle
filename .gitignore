@@ -5,3 +5,4 @@ build/
 .php_cs.cache
 clover.xml
 /.phpunit.result.cache
+/tools

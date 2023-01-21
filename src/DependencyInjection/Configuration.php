@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2022 Contentful GmbH
+ * @copyright 2015-2023 Contentful GmbH
  * @license   MIT
  */
 
@@ -181,7 +181,7 @@ class Configuration implements ConfigurationInterface
     {
         // PHPStan does not know this is guaranteed to return a NodeBuilder on line 192.
         // Therefore, we need to ignore this.
-        return $this->builder /** @phpstan-ignore-line */
+        return $this->builder /* @phpstan-ignore-line */
             ->arrayNode('cache')
             ->addDefaultsIfNotSet()
             ->children()
@@ -201,9 +201,6 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    /**
-     * @return bool
-     */
     public function isDebug(): bool
     {
         return $this->debug;
