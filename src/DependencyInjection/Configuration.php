@@ -128,6 +128,7 @@ class Configuration implements ConfigurationInterface
             ->append($this->createLoggerNode())
             ->append($this->createClientNode())
             ->append($this->createCacheNode())
+            ->append($this->createQueryCacheNode())
             ->end()
         ;
     }
@@ -204,5 +205,30 @@ class Configuration implements ConfigurationInterface
     public function isDebug(): bool
     {
         return $this->debug;
+    }
+
+    private function createQueryCacheNode(): NodeDefinition
+    {
+        return $this->builder
+            ->arrayNode('query_cache')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('pool')
+            ->info(
+                'A PSR-6 cache item pool implementation, will default to the system cache. This will be used to '.
+                'cache items retrieved with queries when calling `$client->getEntries($query)`'
+            )
+            ->defaultNull()
+            ->end()
+            ->integerNode('lifetime')
+            ->info(
+                'The number of seconds of lifetime for `$client->getEntries($query)` cache items. '.
+                'There\'s no invalidation mechanism on these cache items so consider to set a low lifetime '.
+                '(for example 60 seconds).'
+            )
+            ->defaultValue(60)
+            ->end()
+            ->end()
+        ;
     }
 }

@@ -47,6 +47,11 @@ class ContentfulExtension extends Extension
         ;
     }
 
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new Configuration(false);
+    }
+
     /**
      * Registers two base cache handlers, one for warming up and one for clearing.
      * They are defined as abstract as a "concrete" implementation will be defined
@@ -179,11 +184,18 @@ class ContentfulExtension extends Extension
             $options['options']['client'] = new Reference($options['options']['client']);
         }
 
-        $pool = $options['options']['cache']['pool'];
-        if (null !== $pool) {
-            $options['options']['cache']['pool'] = true === $pool
+        $cachePool = $options['options']['cache']['pool'];
+        if (null !== $cachePool) {
+            $options['options']['cache']['pool'] = true === $cachePool
                 ? new Reference(CacheItemPoolInterface::class)
-                : new Reference($pool);
+                : new Reference($cachePool);
+        }
+
+        $queryCachePool = $options['options']['query_cache']['pool'];
+        if (null !== $queryCachePool) {
+            $options['options']['query_cache']['pool'] = true === $queryCachePool
+                ? new Reference(CacheItemPoolInterface::class)
+                : new Reference($queryCachePool);
         }
 
         return $options;

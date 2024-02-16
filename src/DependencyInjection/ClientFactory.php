@@ -61,6 +61,13 @@ class ClientFactory
             );
         }
 
+        if (isset($config['options']['query_cache']['pool'])) {
+            $options->withQueryCache(
+                $config['options']['query_cache']['pool'],
+                $config['options']['query_cache']['lifetime']
+            );
+        }
+
         return $options;
     }
 }
