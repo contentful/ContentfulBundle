@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2023 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -31,9 +31,6 @@ class CacheClearer implements CacheClearerInterface
         $this->clearer = new SdkCacheClearer($client, $client->getResourcePool(), $cacheItemPool);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clear($cacheDir)
     {
         $this->clearer->clear();

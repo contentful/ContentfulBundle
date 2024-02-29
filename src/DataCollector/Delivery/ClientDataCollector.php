@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2023 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -46,9 +46,6 @@ class ClientDataCollector extends DataCollector
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function collect(Request $request, Response $response, $exception = null)
     {
         $messages = [];
@@ -96,9 +93,6 @@ class ClientDataCollector extends DataCollector
         return 'contentful';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reset()
     {
         $this->data = [

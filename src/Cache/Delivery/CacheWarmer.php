@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2023 Contentful GmbH
+ * @copyright 2015-2024 Contentful GmbH
  * @license   MIT
  */
 
@@ -43,19 +43,14 @@ class CacheWarmer implements CacheWarmerInterface
         $this->cacheContent = $cacheContent;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function warmUp($cacheDir): array
     {
         $this->warmer->warmUp($this->cacheContent);
+
         // we don't have any directories to pre-load, so we can simply return an empty array.
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isOptional(): bool
     {
         // If the cache can be filled at runtime,
