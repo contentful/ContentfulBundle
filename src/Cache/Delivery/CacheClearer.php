@@ -31,7 +31,7 @@ class CacheClearer implements CacheClearerInterface
         $this->clearer = new SdkCacheClearer($client, $client->getResourcePool(), $cacheItemPool);
     }
 
-    public function clear($cacheDir) : void
+    public function clear($cacheDir): void
     {
         $this->clearer->clear();
     }
