@@ -43,7 +43,7 @@ class CacheWarmer implements CacheWarmerInterface
         $this->cacheContent = $cacheContent;
     }
 
-    public function warmUp($cacheDir): array
+    public function warmUp(string $cacheDir, ?string $buildDir = null): array
     {
         $this->warmer->warmUp($this->cacheContent);
 
