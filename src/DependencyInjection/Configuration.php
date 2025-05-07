@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2024 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -206,7 +206,7 @@ class Configuration implements ConfigurationInterface
 
     private function createQueryCacheNode(): NodeDefinition
     {
-        return $this->builder
+        return $this->builder /* @phpstan-ignore-line */
             ->arrayNode('query_cache')
             ->addDefaultsIfNotSet()
             ->children()
