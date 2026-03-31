@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -45,7 +45,7 @@ class InfoCommand extends Command
             return 0;
         }
 
-        $data = \array_map(function (array $item, string $name) {
+        $data = \array_map(static function (array $item, string $name) {
             return [
                 $name,
                 $item['service'],

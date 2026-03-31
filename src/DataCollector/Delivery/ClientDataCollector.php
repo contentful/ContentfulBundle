@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -76,14 +76,14 @@ class ClientDataCollector extends DataCollector
 
     public function getTotalDuration(): float
     {
-        return \array_reduce($this->data['messages'], function (float $carry, Message $message) {
+        return \array_reduce($this->data['messages'], static function (float $carry, Message $message) {
             return $carry + $message->getDuration();
         }, 0.0);
     }
 
     public function getErrorCount(): int
     {
-        return \array_reduce($this->data['messages'], function (int $carry, Message $message) {
+        return \array_reduce($this->data['messages'], static function (int $carry, Message $message) {
             return $carry + ($message->isError() ? 1 : 0);
         }, 0);
     }

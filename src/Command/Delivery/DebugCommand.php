@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -102,7 +102,7 @@ class DebugCommand extends Command
             'Locales (%d)',
             \count($environment->getLocales())
         ));
-        $data = \array_map(function (Locale $locale) {
+        $data = \array_map(static function (Locale $locale) {
             return [
                 $locale->getId(),
                 $locale->getName(),
@@ -120,7 +120,7 @@ class DebugCommand extends Command
             'Content types (%d)',
             \count($contentTypes)
         ));
-        $data = \array_map(function (ContentType $contentType) use ($entries) {
+        $data = \array_map(static function (ContentType $contentType) use ($entries) {
             return [
                 $contentType->getId(),
                 $contentType->getName(),

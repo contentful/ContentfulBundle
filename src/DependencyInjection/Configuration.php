@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -148,7 +148,7 @@ class Configuration implements ConfigurationInterface
             ->defaultNull()
             ->cannotBeEmpty()
             ->validate()
-            ->ifTrue(function (string $url): bool {
+            ->ifTrue(static function (string $url): bool {
                 return false === \filter_var($url, \FILTER_VALIDATE_URL);
             })
             ->thenInvalid('Parameter "host" in client configuration must be a valid URL.')

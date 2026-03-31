@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -125,7 +125,7 @@ class ContentfulExtension extends Extension
             $configs[$name]['default'] = true;
         }
 
-        $defaults = \array_reduce($configs, function (int $carry, array $config) {
+        $defaults = \array_reduce($configs, static function (int $carry, array $config) {
             return $carry + (int) (true === $config['default']);
         }, 0);
         if (1 !== $defaults) {

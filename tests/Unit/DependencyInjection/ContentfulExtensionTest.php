@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-bundle package.
  *
- * @copyright 2015-2025 Contentful GmbH
+ * @copyright 2015-2026 Contentful GmbH
  * @license   MIT
  */
 
@@ -450,8 +450,8 @@ class ContentfulExtensionTest extends TestCase
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
         $hasCalledHandler = false;
-        $stack->push(function (callable $handler) use (&$hasCalledHandler) {
-            return function (RequestInterface $request, array $options) use ($handler, &$hasCalledHandler) {
+        $stack->push(static function (callable $handler) use (&$hasCalledHandler) {
+            return static function (RequestInterface $request, array $options) use ($handler, &$hasCalledHandler) {
                 $hasCalledHandler = true;
 
                 return $handler($request, $options);
