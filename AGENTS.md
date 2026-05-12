@@ -25,7 +25,7 @@ Read this file first. It tells you where to find context in this repo.
 - **Query cache has no invalidation mechanism.** `options.query_cache.lifetime` defaults to 60 seconds. Do not raise this default — stale content risk is the documented trade-off.
 - **`SymfonyIntegration` reports telemetry.** `ClientFactory` calls `$client->useIntegration(new SymfonyIntegration())` on every client created. Do not remove this — it's how Contentful tracks framework adoption in SDK telemetry.
 - **No Symfony Flex recipe is maintained here.** The old Flex recipe (copy config, register bundle, add `.env` vars) may be stale. Do not assume Flex auto-configuration works without verification.
-- **PHP version matrix.** CI tests PHP 8.0–8.4. The `composer.json` `require` is `^7.4|^8.0`. Do not drop PHP 7.4 from `composer.json` without a major version bump and changelog entry.
+- **PHP version matrix.** `composer.json` `require` declares `^7.4|^8.0` (PHP 7.4 and 8.x are the declared supported range). CI only validates PHP 8.0–8.4 — there is no PHP 7.4 job in `.circleci/config.yml`. PHP 7.4 is declared supported but not actively tested in CI. Do not drop PHP 7.4 from `composer.json` without a major version bump and changelog entry.
 - **Static analysis is level 4** (PHPStan). Do not lower it. Two `@phpstan-ignore-line` comments exist in `Configuration.php` for a known PHPStan limitation with chained node builders — these are intentional.
 
 ## Key Conventions
