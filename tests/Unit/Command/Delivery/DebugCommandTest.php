@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class DebugCommandTest extends TestCase
 {
-    public function testOutput()
+    public function testOutput(): void
     {
         $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
         $configurations = [
@@ -49,7 +49,7 @@ class DebugCommandTest extends TestCase
         $this->assertSame($this->getFixtureContent('output.txt'), $output->fetch());
     }
 
-    public function testInvalidClient()
+    public function testInvalidClient(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Could not find the requested client "invalid", use "contentful:delivery:info" to check the configured clients.');
@@ -68,7 +68,7 @@ class DebugCommandTest extends TestCase
         $command->run($input, $output);
     }
 
-    public function testDataCannotBeFetched()
+    public function testDataCannotBeFetched(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Requested service was found, but data could not be loaded. Try checking client credentials.');

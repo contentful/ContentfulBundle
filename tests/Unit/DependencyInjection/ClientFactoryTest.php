@@ -22,7 +22,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class ClientFactoryTest extends TestCase
 {
-    public function testCreateDelivery()
+    public function testCreateDelivery(): void
     {
         $handler = new TestHandler();
         $cache = new ArrayAdapter();
@@ -54,7 +54,7 @@ class ClientFactoryTest extends TestCase
         $this->assertJson($cache->getItem('contentful.DELIVERY.cfexampleapi.master.ContentType.cat.__ALL__')->get());
     }
 
-    public function testCreatePreview()
+    public function testCreatePreview(): void
     {
         $config = [
             'token' => 'b4c0n73n7fu1',

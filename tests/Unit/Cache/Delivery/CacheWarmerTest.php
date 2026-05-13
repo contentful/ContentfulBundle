@@ -18,7 +18,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class CacheWarmerTest extends TestCase
 {
-    public function testWarmer()
+    public function testWarmer(): void
     {
         $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
         $cache = new ArrayAdapter();

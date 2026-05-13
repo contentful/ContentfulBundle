@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class InfoCommandTest extends TestCase
 {
-    public function testOutput()
+    public function testOutput(): void
     {
         $input = new ArrayInput([]);
         $output = new BufferedOutput();

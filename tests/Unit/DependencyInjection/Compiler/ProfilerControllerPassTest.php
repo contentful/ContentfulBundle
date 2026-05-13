@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class ProfilerControllerPassTest extends TestCase
 {
-    public function testMissingProfilerAndTwig()
+    public function testMissingProfilerAndTwig(): void
     {
         $container = $this->getContainer();
 
@@ -28,7 +28,7 @@ class ProfilerControllerPassTest extends TestCase
         $this->assertFalse($container->hasDefinition('contentful.profiler_controller'));
     }
 
-    public function testMissingProfiler()
+    public function testMissingProfiler(): void
     {
         $container = $this->getContainer();
         $container->setDefinition('twig', new Definition());
@@ -40,7 +40,7 @@ class ProfilerControllerPassTest extends TestCase
         $this->assertFalse($container->hasDefinition('contentful.profiler_controller'));
     }
 
-    public function testMissingTwig()
+    public function testMissingTwig(): void
     {
         $container = $this->getContainer();
         $container->setDefinition('profiler', new Definition());
@@ -52,7 +52,7 @@ class ProfilerControllerPassTest extends TestCase
         $this->assertFalse($container->hasDefinition('contentful.profiler_controller'));
     }
 
-    public function testProfilerAndTwigPresent()
+    public function testProfilerAndTwigPresent(): void
     {
         $container = $this->getContainer();
         $container->setDefinition('profiler', new Definition());

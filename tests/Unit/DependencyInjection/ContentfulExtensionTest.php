@@ -30,7 +30,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ContentfulExtensionTest extends TestCase
 {
-    public function testContainerCompiles()
+    public function testContainerCompiles(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -64,7 +64,7 @@ class ContentfulExtensionTest extends TestCase
         $this->assertTrue($container->isCompiled());
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -104,7 +104,7 @@ class ContentfulExtensionTest extends TestCase
         $this->assertSame($client, $container->get('contentful.delivery.client'));
     }
 
-    public function testEmptyConfigDoesNotThrowErrors()
+    public function testEmptyConfigDoesNotThrowErrors(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -116,7 +116,7 @@ class ContentfulExtensionTest extends TestCase
         $this->markTestAsPassed('Test did not throw an exception');
     }
 
-    public function testInvalidHost()
+    public function testInvalidHost(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Invalid configuration for path "contentful.delivery.main.options.host": Parameter "host" in client configuration must be a valid URL.');
@@ -141,7 +141,7 @@ class ContentfulExtensionTest extends TestCase
         ], $container);
     }
 
-    public function testInvalidNumberOfDefaultClients()
+    public function testInvalidNumberOfDefaultClients(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -199,7 +199,7 @@ class ContentfulExtensionTest extends TestCase
         }
     }
 
-    public function testGetClientWithDefaultCache()
+    public function testGetClientWithDefaultCache(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -277,7 +277,7 @@ class ContentfulExtensionTest extends TestCase
         $this->assertTrue($content);
     }
 
-    public function testGetClientWithCustomCache()
+    public function testGetClientWithCustomCache(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -355,7 +355,7 @@ class ContentfulExtensionTest extends TestCase
         $this->assertTrue($content);
     }
 
-    public function testGetClientWithDefaultLogger()
+    public function testGetClientWithDefaultLogger(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -397,7 +397,7 @@ class ContentfulExtensionTest extends TestCase
         $this->assertSame('DEBUG', $logs[1]['level_name']);
     }
 
-    public function testGetClientWithCustomLogger()
+    public function testGetClientWithCustomLogger(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();
@@ -440,7 +440,7 @@ class ContentfulExtensionTest extends TestCase
         $this->assertSame('DEBUG', $logs[1]['level_name']);
     }
 
-    public function testHttpClient()
+    public function testHttpClient(): void
     {
         $container = $this->getContainer();
         $extension = new ContentfulExtension();

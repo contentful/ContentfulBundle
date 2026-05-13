@@ -21,7 +21,7 @@ class ProfilerControllerPass implements CompilerPassInterface
     /**
      * Loads the definition for the ProfilerController when the profiler and twig are present.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('profiler') || !$container->hasDefinition('twig')) {
             return;
