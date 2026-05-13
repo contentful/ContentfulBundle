@@ -19,7 +19,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class CacheClearerTest extends TestCase
 {
-    public function testClearer()
+    public function testClearer(): void
     {
         $cachePool = new ArrayAdapter();
         $this->prefillCache($cachePool);

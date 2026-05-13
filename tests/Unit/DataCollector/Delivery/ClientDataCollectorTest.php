@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClientDataCollectorTest extends TestCase
 {
-    public function testGetData()
+    public function testGetData(): void
     {
         $client = new Client('b4c0n73n7fu1', 'cfexampleapi', 'master');
         $configurations = [

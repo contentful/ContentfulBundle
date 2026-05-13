@@ -16,7 +16,7 @@ use Contentful\Tests\ContentfulBundle\TestCase;
 
 class SymfonyIntegrationTest extends TestCase
 {
-    public function testGetData()
+    public function testGetData(): void
     {
         $integration = new SymfonyIntegration();
 

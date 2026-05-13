@@ -17,7 +17,7 @@ use Contentful\Tests\ContentfulBundle\TestCase;
 
 class ContentfulBundleTest extends TestCase
 {
-    public function testCompilerPassIsAdded()
+    public function testCompilerPassIsAdded(): void
     {
         $bundle = new ContentfulBundle();
         $container = $this->getContainer();

@@ -46,7 +46,7 @@ class ClientDataCollector extends DataCollector
         }
     }
 
-    public function collect(Request $request, Response $response, $exception = null)
+    public function collect(Request $request, Response $response, $exception = null): void
     {
         $messages = [];
         foreach ($this->clients as $client) {
@@ -93,7 +93,7 @@ class ClientDataCollector extends DataCollector
         return 'contentful';
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->data = [
             'messages' => [],
