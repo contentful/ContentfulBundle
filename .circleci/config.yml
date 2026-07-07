@@ -8,6 +8,7 @@ workflows:
       - lintSyntax
       - lintStaticAnalysis
       - checkBcBreaks
+      - test80
       - test81
       - test82
       - test83
@@ -53,6 +54,14 @@ jobs:
           name: Check for backwards-compatibility breaks
           command: composer run test-for-bc-breaks || true
 
+
+  test80:
+    docker:
+      - image: cimg/php:8.0
+    steps:
+      - checkout
+      - run: { name: "Install dependencies", command: "sudo composer self-update && composer install -n --prefer-dist" }
+      - run: { name: "Test suite", command: "composer test-quick-fail" }
 
   test81:
     docker:
