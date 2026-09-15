@@ -98,7 +98,7 @@ Version follows [Semantic Versioning](https://semver.org/). The current major is
 - CI (CircleCI) must pass: syntax lint, static analysis, and tests on PHP 8.0–8.4
 - No enforced PR title format, but prefer descriptive titles
 - CodeQL scans `.github/workflows/` on push/PR to `master`
-- Code owner: `@contentful/team-developer-experience` (see `.github/CODEOWNERS`)
+- Code owner: `@contentful/group-applied-ai-solutions` (see `.github/CODEOWNERS`)
 
 ## CI/CD
 
